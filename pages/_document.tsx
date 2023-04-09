@@ -7,7 +7,7 @@ export default class _Document extends Document {
   static getInitialProps = getInitialProps;
 
   render() {
-    return (
+    return(
       <Html>
         <Head />
         <body>

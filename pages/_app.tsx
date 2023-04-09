@@ -5,7 +5,7 @@ import { MantineProvider } from "@mantine/core";
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
 
-  return (
+  return(
     <>
       <Head>
         <title>RG Job Board</title>

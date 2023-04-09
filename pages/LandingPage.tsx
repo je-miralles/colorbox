@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createStyles, rem, Container, Title, Grid } from '@mantine/core';
 const Papa = require('papaparse');
 
-import JobCard from './JobCard';
+import JobCard, { JobCardData } from './JobCard';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -45,9 +45,13 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export default function LandingPage({ url }) {
+type LandingPageProps = {
+    url: string;
+};
+
+export default function LandingPage({ url }: LandingPageProps) {
   const { classes } = useStyles()
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<JobCardData[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {

@@ -1,6 +1,4 @@
 import Head from 'next/head';
-import { Button, Group, Container, Title, Grid } from "@mantine/core";
-import { useEffect, useState } from 'react';
 
 import LandingPage from './LandingPage'
 

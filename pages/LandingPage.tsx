@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createStyles, rem, Container, Title, Grid } from '@mantine/core';
 const Papa = require('papaparse');
 

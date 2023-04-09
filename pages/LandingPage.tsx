@@ -46,7 +46,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 type LandingPageProps = {
-    url: string;
+  url: string;
 };
 
 export default function LandingPage({ url }: LandingPageProps) {

@@ -1,37 +1,40 @@
 import { Card, Text, Group } from '@mantine/core';
 
 export type JobCardData = {
-    'title': string;
-    'description': string;
-    'contact': string;
-    'time-committment': string;
-    'minimum commitment': string;
-    'start date': string;
-    'number of people to fill this role': string;
-    'applicant-characteristics': string;
-    'Link to more details': string;
+  'title': string;
+  'description': string;
+  'contact': string;
+  'time-committment': string;
+  'minimum commitment': string;
+  'start date': string;
+  'number of people to fill this role': string;
+  'applicant-characteristics': string;
+  'Link to more details': string;
 };
 
 type JobCardProps = {
-    data: JobCardData;
+  data: JobCardData;
 };
 
 export default function JobCard({ data }: JobCardProps) {
-    return (
-        <Card>{data.title}</Card>
-    );
+  return (
+    <Card>{data.title}</Card>
+      // {Object.keys(data[listing_num]).map((field_name, field_key) => (
+      //     <li key={field_key}>{field_name}, {data[listing_num][field_name]}</li>
+      // ))}
+  );
 }
 
 JobCard.defaultProps = {
-    data: {
-        'title': "",
-        'description': "",
-        'contact': "",
-        'time-committment': "",
-        'minimum commitment': "",
-        'start date': "",
-        'number of people to fill this role': "",
-        'applicant-characteristics': "",
-        'Link to more details': ""
-    }
+  data: {
+    'title': "",
+    'description': "",
+    'contact': "",
+    'time-committment': "",
+    'minimum commitment': "",
+    'start date': "",
+    'number of people to fill this role': "",
+    'applicant-characteristics': "",
+    'Link to more details': ""
+  }
 };

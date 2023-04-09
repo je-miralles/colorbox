@@ -67,7 +67,7 @@ export default function LandingPage({ url }: LandingPageProps) {
       }
     };
     fetchData();
-  }, []);
+  }, [url]);
 
   return (
     <main>

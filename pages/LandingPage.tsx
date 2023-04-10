@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { createStyles, rem, Container, Title, Grid } from '@mantine/core';
-const Papa = require('papaparse');
 
 import JobCard, { JobCardData } from './JobCard';
 
@@ -58,6 +57,7 @@ export default function LandingPage({ url }: LandingPageProps) {
       try {
         const response = await fetch(url);
         const csvText = await response.text();
+        const Papa = require('papaparse');
         const theCsv = Papa.parse(csvText, {
           header: true
         });

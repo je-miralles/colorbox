@@ -1,4 +1,4 @@
-import { Card, Text, Group } from '@mantine/core';
+import { Badge, Button, Card, Text } from '@mantine/core';
 
 export type JobCardData = {
   'title': string;
@@ -18,10 +18,11 @@ type JobCardProps = {
 
 export default function JobCard({ data }: JobCardProps) {
   return(
-    <Card>{data.title}</Card>
-      // {Object.keys(data[listing_num]).map((field_name, field_key) => (
-      //     <li key={field_key}>{field_name}, {data[listing_num][field_name]}</li>
-      // ))}
+    <Card>
+      <Badge>{data.title}</Badge>
+      <Text>{data.description}</Text>
+      <Button>{data.link}</Button>
+    </Card>
   );
 }
 

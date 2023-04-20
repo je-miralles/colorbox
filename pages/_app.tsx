@@ -30,7 +30,7 @@ export default function App(props: AppProps) {
               '#666980',
               '#4d4f66',
               '#34354a',
-              '#e03131', // card color
+              '#2b2c3d', // card color
               '#2C2E33', // body background color
               '#0c0d21',
               '#01010a',

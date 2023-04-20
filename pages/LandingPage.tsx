@@ -64,9 +64,9 @@ export default function LandingPage({ url }: LandingPageProps) {
         </Title>
       </Container>
       <Container>
-        <Grid>
+        <Grid align="stretch">
           {data.map((d, k) => (
-            <Grid.Col span={4} key={k}>
+            <Grid.Col md={6} lg={3} key={k}>
               <JobCard data={d}></JobCard>
             </Grid.Col>))}
         </Grid>

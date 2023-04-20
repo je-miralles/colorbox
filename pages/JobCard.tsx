@@ -1,4 +1,4 @@
-import { Badge, Button, Card, Text } from '@mantine/core';
+import { rem, Badge, Button, Card, Text } from '@mantine/core';
 
 export type JobCardData = {
   'title': string;
@@ -17,11 +17,29 @@ type JobCardProps = {
 };
 
 export default function JobCard({ data }: JobCardProps) {
+  const randomColor = () => {
+    const randVal = () => Math.round(Math.random() * 100);
+    return `rgb(${randVal()}, ${randVal()}, ${randVal()})`;
+  };
+
   return(
-    <Card>
-      <Badge>{data.title}</Badge>
-      <Text>{data.description}</Text>
-      <Button>{data.link}</Button>
+    <Card sx={{ backgroundColor: `${randomColor()}` }}>
+      <Text Text weight={500} size="lg" mb="md">{data.title}</Text>
+      <Text size="sm" color="dimmed" lineClamp={10}>
+        {data.description}
+      </Text>
+      <Button
+        component="a"
+        target="_blank"
+        href={data.link}
+        styles={(theme) => ({
+          root: {
+            height: rem(22),
+          }
+        })}
+      >
+        link
+      </Button>
     </Card>
   );
 }
@@ -37,5 +55,5 @@ JobCard.defaultProps = {
     'number-of-people-to-fill-this-role': "",
     'applicant-characteristics': "",
     'link': ""
-  }
+  },
 };

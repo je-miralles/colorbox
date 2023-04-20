@@ -24,16 +24,16 @@ export default function App(props: AppProps) {
           colorScheme: "dark",
           colors: {
             dark: [
-              '#ebfbee', // text color
-              '#d3f9d8',
-              '#b2f2bb',
-              '#8ce99a',
-              '#69db7c',
-              '#51cf66',
-              '#40c057',
-              '#37b24d', // body background color
-              '#2f9e44',
-              '#2b8a3e',
+              '#C1C2C5', // text color
+              '#A6A7AB',
+              '#909296',
+              '#5c5f66',
+              '#373A40',
+              '#2C2E33',
+              '#25262b',
+              '#2C2E33', // body background color
+              '#141517',
+              '#101113',
             ],
           }
         }}

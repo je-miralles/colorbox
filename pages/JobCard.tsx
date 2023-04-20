@@ -5,11 +5,11 @@ export type JobCardData = {
   'description': string;
   'contact': string;
   'time-committment': string;
-  'minimum commitment': string;
-  'start date': string;
-  'number of people to fill this role': string;
+  'minimum-commitment': string;
+  'start-date': string;
+  'number-of-people-to-fill-this-role': string;
   'applicant-characteristics': string;
-  'Link to more details': string;
+  'link': string;
 };
 
 type JobCardProps = {
@@ -32,10 +32,10 @@ JobCard.defaultProps = {
     'description': "",
     'contact': "",
     'time-committment': "",
-    'minimum commitment': "",
-    'start date': "",
-    'number of people to fill this role': "",
+    'minimum-commitment': "",
+    'start-date': "",
+    'number-of-people-to-fill-this-role': "",
     'applicant-characteristics': "",
-    'Link to more details': ""
+    'link': ""
   }
 };

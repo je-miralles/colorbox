@@ -15,17 +15,6 @@ const useStyles = createStyles((theme) => ({
     },
   },
 
-  inner: {
-    position: 'relative',
-    paddingTop: rem(120),
-    paddingBottom: rem(80),
-
-    [theme.fn.smallerThan('sm')]: {
-      paddingTop: rem(80),
-      paddingBottom: rem(60),
-    },
-  },
-
   title: {
     textAlign: 'center',
     fontWeight: 800,
@@ -70,11 +59,9 @@ export default function LandingPage({ url }: LandingPageProps) {
   return(
     <main>
       <Container className={classes.wrapper} size={1400}>
-        <div className={classes.inner}>
-          <Title className={classes.title}>
-            Resource Generation Job Board
-          </Title>
-        </div>
+        <Title className={classes.title}>
+          Resource Generation Job Board
+        </Title>
       </Container>
       <Container>
         <Grid>

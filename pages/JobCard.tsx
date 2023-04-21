@@ -22,7 +22,7 @@ export default function JobCard({ data, color }: JobCardProps) {
     <Card component="a"
           href={data.link}
           target="_blank"
-          sx={{ height: rem(22), backgroundColor: `${color}`  }}
+          sx={{ backgroundColor: `${color}`  }}
     >
       <Text weight={500} size="lg" mb="md">
         {data.title}

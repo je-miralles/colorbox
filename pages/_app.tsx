@@ -24,14 +24,14 @@ export default function App(props: AppProps) {
           colorScheme: "dark",
           colors: {
             dark: [
-              '#d5d7e0', // text color
+              '#d5d7e0', // dark colorScheme text color
               '#acaebf',
               '#8c8fa3',
               '#666980',
               '#4d4f66',
               '#34354a',
-              '#2b2c3d', // card color
-              '#2C2E33', // body background color
+              '#2b2c3d', // dark colorScheme card color
+              '#2C2E33', // dark colorScheme body background color
               '#0c0d21',
               '#01010a',
             ],

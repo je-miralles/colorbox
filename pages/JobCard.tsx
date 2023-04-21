@@ -19,10 +19,11 @@ type JobCardProps = {
 
 export default function JobCard({ data, color }: JobCardProps) {
   return(
-    <Card component="a"
-          href={data.link}
-          target="_blank"
-          sx={{ backgroundColor: `${color}`  }}
+    <Card
+      component="a"
+      href={data.link}
+      target="_blank"
+      sx={{ backgroundColor: `${color}` }}
     >
       <Text weight={500} size="lg" mb="md">
         {data.title}

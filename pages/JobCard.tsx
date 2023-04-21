@@ -1,4 +1,4 @@
-import { rem, Badge, Button, Card, Text } from '@mantine/core';
+import { rem, Card, Text } from '@mantine/core';
 
 export type JobCardData = {
   'title': string;
@@ -19,19 +19,17 @@ type JobCardProps = {
 
 export default function JobCard({ data, color }: JobCardProps) {
   return(
-    <Card sx={{ backgroundColor: `${color}` }}>
-      <Text weight={500} size="lg" mb="md">{data.title}</Text>
+    <Card component="a"
+          href={data.link}
+          target="_blank"
+          sx={{ height: rem(22), backgroundColor: `${color}`  }}
+    >
+      <Text weight={500} size="lg" mb="md">
+        {data.title}
+      </Text>
       <Text size="sm" color="dimmed" lineClamp={10}>
         {data.description}
       </Text>
-      <Button
-        component="a"
-        href={data.link}
-        target="_blank"
-        sx={{ height: rem(22) }}
-      >
-        link
-      </Button>
     </Card>
   );
 }

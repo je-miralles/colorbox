@@ -22,7 +22,7 @@ const useStyles = createStyles((theme) => ({
     letterSpacing: -1,
 
     color: theme.colorScheme === 'dark' ? theme.white : theme.black,
-    
+
     marginBottom: theme.spacing.xs,
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
 
@@ -38,7 +38,7 @@ type LandingPageProps = {
 };
 
 export default function LandingPage({ url }: LandingPageProps) {
-  const { classes } = useStyles()
+  const { classes } = useStyles();
   const [data, setData] = useState<JobCardData[]>([]);
 
   useEffect(() => {

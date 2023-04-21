@@ -60,7 +60,7 @@ export default function LandingPage({ url }: LandingPageProps) {
     <main>
       <Container className={classes.wrapper} size={1400}>
         <Title className={classes.title}>
-          Resource Generation Job Board
+          Dark Job Board
         </Title>
       </Container>
       <Container>

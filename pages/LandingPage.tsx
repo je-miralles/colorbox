@@ -56,6 +56,11 @@ export default function LandingPage({ url }: LandingPageProps) {
     fetchData();
   }, [url]);
 
+  const randomColor = () => {
+    const randVal = () => Math.round(Math.random() * 100);
+    return `rgb(${randVal()}, ${randVal()}, ${randVal()})`;
+  };
+
   return(
     <main>
       <Container className={classes.wrapper} size={1400}>
@@ -67,7 +72,7 @@ export default function LandingPage({ url }: LandingPageProps) {
         <Grid align="stretch">
           {data.map((d, k) => (
             <Grid.Col md={6} lg={3} key={k}>
-              <JobCard data={d}></JobCard>
+              <JobCard data={d} color={randomColor()}></JobCard>
             </Grid.Col>))}
         </Grid>
       </Container>

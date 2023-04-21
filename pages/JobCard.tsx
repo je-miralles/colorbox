@@ -14,16 +14,12 @@ export type JobCardData = {
 
 type JobCardProps = {
   data: JobCardData;
+  color: string;
 };
 
-export default function JobCard({ data }: JobCardProps) {
-  const randomColor = () => {
-    const randVal = () => Math.round(Math.random() * 100);
-    return `rgb(${randVal()}, ${randVal()}, ${randVal()})`;
-  };
-
+export default function JobCard({ data, color }: JobCardProps) {
   return(
-    <Card sx={{ backgroundColor: `${randomColor()}` }}>
+    <Card sx={{ backgroundColor: `${color}` }}>
       <Text Text weight={500} size="lg" mb="md">{data.title}</Text>
       <Text size="sm" color="dimmed" lineClamp={10}>
         {data.description}
@@ -56,4 +52,5 @@ JobCard.defaultProps = {
     'applicant-characteristics': "",
     'link': ""
   },
+  color: "darkBlue",
 };

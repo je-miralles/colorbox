@@ -41,10 +41,9 @@ export default function LandingPage({ url }: LandingPageProps) {
   const { classes } = useStyles();
   const [data, setData] = useState<JobCardData[]>([]);
   const [colors, setColors] = useState<string[]>([]);
-  const [isLoading, setLoading] = useState<boolean>(false);
+  const [isLoaded, setLoaded] = useState<boolean>(false);
 
   useEffect(() => {
-    setLoading(true);
     const randomColor = (max: number = 100) => {
       const randVal = () => Math.floor(Math.random() * max);
       return `rgb(${randVal()}, ${randVal()}, ${randVal()})`;
@@ -55,27 +54,25 @@ export default function LandingPage({ url }: LandingPageProps) {
     };
 
     const fetchData = async () => {
-      if (!data) {
-        try {
+      try {
+        if (!isLoaded) {
           const response = await fetch(url);
           const csvText = await response.text();
           const Papa = require('papaparse');
           const theCsv = Papa.parse(csvText, {header: true});
           setData([...theCsv.data]);
           setColors([...genColors(theCsv.data.length)]);
-          setLoading(false);
-        } catch (error) {
-          console.log("error", error);
+          setLoaded(true);
         }
+      } catch (error) {
+        console.log("error", error);
       }
     };
     fetchData();
-  }, [url, data]);
+  }, [url, isLoaded]);
 
-  if (isLoading) return <p>Loading...</p>
-  if (!data) return <p>No data</p>
-
-  return(
+  if (!isLoaded) return <p>Loading...</p>
+  else return(
     <main>
       <Container className={classes.wrapper} size={1400}>
         <Title className={classes.title}>

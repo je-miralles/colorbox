@@ -40,8 +40,18 @@ type LandingPageProps = {
 export default function LandingPage({ url }: LandingPageProps) {
   const { classes } = useStyles();
   const [data, setData] = useState<JobCardData[]>([]);
+  const [colors, setColors] = useState<string[]>([]);
 
   useEffect(() => {
+    const randomColor = (max: number = 100) => {
+      const randVal = () => Math.floor(Math.random() * max);
+      return `rgb(${randVal()}, ${randVal()}, ${randVal()})`;
+    };
+
+    const genColors = (num_colors: number) => {
+      return Array.from({ length: num_colors }, () => randomColor());
+    };
+
     const fetchData = async () => {
       try {
         const response = await fetch(url);
@@ -49,17 +59,13 @@ export default function LandingPage({ url }: LandingPageProps) {
         const Papa = require('papaparse');
         const theCsv = Papa.parse(csvText, {header: true});
         setData([...theCsv.data]);
+        setColors([...genColors(theCsv.data.length)]);
       } catch (error) {
         console.log("error", error);
       }
     };
     fetchData();
-  }, [url]);
-
-  const randomColor = () => {
-    const randVal = () => Math.round(Math.random() * 100);
-    return `rgb(${randVal()}, ${randVal()}, ${randVal()})`;
-  };
+  }, [url, data.length]);
 
   return(
     <main>
@@ -72,7 +78,7 @@ export default function LandingPage({ url }: LandingPageProps) {
         <Grid align="stretch">
           {data.map((d, k) => (
             <Grid.Col md={6} lg={3} key={k}>
-              <JobCard data={d} color={randomColor()}></JobCard>
+              <JobCard data={d} color={colors[k]}></JobCard>
             </Grid.Col>))}
         </Grid>
       </Container>

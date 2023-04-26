@@ -41,10 +41,10 @@ export default function LandingPage({ url }: LandingPageProps) {
   const { classes } = useStyles();
   const [data, setData] = useState<JobCardData[]>([]);
   const [colors, setColors] = useState<string[]>([]);
+  const [isLoading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    let ignore = false;
-
+    setLoading(true);
     const randomColor = (max: number = 100) => {
       const randVal = () => Math.floor(Math.random() * max);
       return `rgb(${randVal()}, ${randVal()}, ${randVal()})`;
@@ -55,7 +55,7 @@ export default function LandingPage({ url }: LandingPageProps) {
     };
 
     const fetchData = async () => {
-      if (!ignore) {
+      if (!data) {
         try {
           const response = await fetch(url);
           const csvText = await response.text();
@@ -63,16 +63,17 @@ export default function LandingPage({ url }: LandingPageProps) {
           const theCsv = Papa.parse(csvText, {header: true});
           setData([...theCsv.data]);
           setColors([...genColors(theCsv.data.length)]);
+          setLoading(false);
         } catch (error) {
           console.log("error", error);
         }
       }
     };
     fetchData();
-    return () => {
-      ignore = true;
-    };
-  }, [url, data.length]);
+  }, [url, data]);
+
+  if (isLoading) return <p>Loading...</p>
+  if (!data) return <p>No data</p>
 
   return(
     <main>

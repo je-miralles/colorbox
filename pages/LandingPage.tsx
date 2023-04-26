@@ -43,6 +43,8 @@ export default function LandingPage({ url }: LandingPageProps) {
   const [colors, setColors] = useState<string[]>([]);
 
   useEffect(() => {
+    let ignore = false;
+
     const randomColor = (max: number = 100) => {
       const randVal = () => Math.floor(Math.random() * max);
       return `rgb(${randVal()}, ${randVal()}, ${randVal()})`;
@@ -53,18 +55,23 @@ export default function LandingPage({ url }: LandingPageProps) {
     };
 
     const fetchData = async () => {
-      try {
-        const response = await fetch(url);
-        const csvText = await response.text();
-        const Papa = require('papaparse');
-        const theCsv = Papa.parse(csvText, {header: true});
-        setData([...theCsv.data]);
-        setColors([...genColors(theCsv.data.length)]);
-      } catch (error) {
-        console.log("error", error);
+      if (!ignore) {
+        try {
+          const response = await fetch(url);
+          const csvText = await response.text();
+          const Papa = require('papaparse');
+          const theCsv = Papa.parse(csvText, {header: true});
+          setData([...theCsv.data]);
+          setColors([...genColors(theCsv.data.length)]);
+        } catch (error) {
+          console.log("error", error);
+        }
       }
     };
     fetchData();
+    return () => {
+      ignore = true;
+    };
   }, [url, data.length]);
 
   return(

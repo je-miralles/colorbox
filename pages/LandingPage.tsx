@@ -1,44 +1,13 @@
 import { useEffect, useState } from 'react';
-import { createStyles, rem, Container, Title, Grid } from '@mantine/core';
+import { Container, Grid, Text } from '@mantine/core';
 
 import JobCard, { JobCardData } from './JobCard';
-
-const useStyles = createStyles((theme) => ({
-  wrapper: {
-    position: 'relative',
-    paddingTop: rem(120),
-    paddingBottom: rem(80),
-
-    [theme.fn.smallerThan('sm')]: {
-      paddingTop: rem(80),
-      paddingBottom: rem(60),
-    },
-  },
-
-  title: {
-    textAlign: 'center',
-    fontWeight: 800,
-    fontSize: rem(40),
-    letterSpacing: -1,
-
-    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
-
-    marginBottom: theme.spacing.xs,
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-
-    [theme.fn.smallerThan('xs')]: {
-      fontSize: rem(28),
-      textAlign: 'left',
-    },
-  },
-}));
 
 type LandingPageProps = {
   url: string;
 };
 
 export default function LandingPage({ url }: LandingPageProps) {
-  const { classes } = useStyles();
   const [data, setData] = useState<JobCardData[]>([]);
   const [colors, setColors] = useState<string[]>([]);
   const [isLoaded, setLoaded] = useState<boolean>(false);
@@ -68,23 +37,16 @@ export default function LandingPage({ url }: LandingPageProps) {
     if (!isLoaded) fetchData();
   }, [url, isLoaded]);
 
-  if (!isLoaded) return <p>Loading...</p>
+  if (!isLoaded) return <Container><Text>Loading...</Text></Container>;
   else return(
-    <main>
-      <Container className={classes.wrapper} size={1400}>
-        <Title className={classes.title}>
-          Dark Job Board
-        </Title>
-      </Container>
-      <Container>
-        <Grid align="stretch">
-          {data.map((d, k) => (
-            <Grid.Col md={6} lg={3} key={k}>
-              <JobCard data={d} color={colors[k]}></JobCard>
-            </Grid.Col>))}
-        </Grid>
-      </Container>
-    </main>
+    <Container>
+      <Grid align="stretch">
+        {data.map((d, k) => (
+          <Grid.Col md={6} lg={3} key={k}>
+            <JobCard data={d} color={colors[k]}></JobCard>
+          </Grid.Col>))}
+      </Grid>
+    </Container>
   );
 }
 

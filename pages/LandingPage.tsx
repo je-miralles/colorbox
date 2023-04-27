@@ -48,27 +48,24 @@ export default function LandingPage({ url }: LandingPageProps) {
       const randVal = () => Math.floor(Math.random() * max);
       return `rgb(${randVal()}, ${randVal()}, ${randVal()})`;
     };
-
     const genColors = (num_colors: number) => {
       return Array.from({ length: num_colors }, () => randomColor());
     };
 
     const fetchData = async () => {
       try {
-        if (!isLoaded) {
-          const response = await fetch(url);
-          const csvText = await response.text();
-          const Papa = require('papaparse');
-          const theCsv = Papa.parse(csvText, {header: true});
-          setData([...theCsv.data]);
-          setColors([...genColors(theCsv.data.length)]);
-          setLoaded(true);
-        }
+        const response = await fetch(url);
+        const csvText = await response.text();
+        const Papa = require('papaparse');
+        const theCsv = Papa.parse(csvText, {header: true});
+        setData([...theCsv.data]);
+        setColors([...genColors(theCsv.data.length)]);
+        setLoaded(true);
       } catch (error) {
         console.log("error", error);
       }
     };
-    fetchData();
+    if (!isLoaded) fetchData();
   }, [url, isLoaded]);
 
   if (!isLoaded) return <p>Loading...</p>

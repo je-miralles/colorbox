@@ -1,4 +1,4 @@
-import { rem, Card, Text } from '@mantine/core';
+import { Card, Text } from '@mantine/core';
 
 export type JobCardData = {
   'title': string;

@@ -20,8 +20,15 @@ export default function LandingPage({ url }: LandingPageProps) {
       const b = randVal(b_min, b_max);
       return `rgb(${r}, ${g}, ${b})`;
     }
+    const randomColorHSL = (h_min=95, h_max=360, s_min=0, s_max=90, l_min=15, l_max=30) => {
+      const randVal = (min, max) => Math.abs(Math.floor(Math.random() * (max - min) + min));
+      const h = randVal(h_min, h_max);
+      const s = randVal(s_min, s_max);
+      const l = randVal(l_min, l_max);
+      return `hsl(${h}, ${s}%, ${l}%)`;
+    };
     const genColors = (num_colors: number) => {
-      return Array.from({ length: num_colors }, () => randomColor());
+      return Array.from({ length: num_colors }, () => randomColorHSL());
     };
 
     const fetchData = async () => {

@@ -44,8 +44,8 @@ export default function LandingPage({ url, rgRGB, rgHSL }: LandingPageProps) {
       const l = randVal(rgHSL.l_min, rgHSL.l_max);
       return `hsl(${h}, ${s}%, ${l}%)`;
     };
-    const genColors = (num_colors: number) => {
-      return Array.from({ length: num_colors }, () => randomColorRGB());
+    const genColors = (num_colors: number, randFunc: () => string=randomColorHSL) => {
+      return Array.from({ length: num_colors }, () => randFunc());
     };
 
     const fetchData = async () => {
@@ -88,11 +88,11 @@ LandingPage.defaultProps = {
     b_max: 98,
   },
   rgHSL: {
-    h_min: 79,
-    h_max: 341,
+    h_min: 0,
+    h_max: 360,
     s_min: 32,
-    s_max: 63,
-    l_min: 32,
-    l_max: 76,
+    s_max: 62,
+    l_min: 25,
+    l_max: 39,
   },
 };

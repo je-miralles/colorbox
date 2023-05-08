@@ -5,30 +5,47 @@ import JobCard, { JobCardData } from './JobCard';
 
 type LandingPageProps = {
   url: string;
+  rgRGB: randomRGBgen;
+  rgHSL: randomHSLgen;
+};
+type randomRGBgen = {
+  r_min: number;
+  r_max: number;
+  g_min: number;
+  g_max: number;
+  b_min: number;
+  b_max: number;
+};
+type randomHSLgen = {
+  h_min: number;
+  h_max: number;
+  s_min: number;
+  s_max: number;
+  l_min: number;
+  l_max: number;
 };
 
-export default function LandingPage({ url }: LandingPageProps) {
+export default function LandingPage({ url, rgRGB, rgHSL }: LandingPageProps) {
   const [data, setData] = useState<JobCardData[]>([]);
   const [colors, setColors] = useState<string[]>([]);
   const [isLoaded, setLoaded] = useState<boolean>(false);
 
   useEffect(() => {
-    const randomColor = (r_min: number=0, r_max: number=125, g_min: number=0, g_max: number=100, b_min: number=0, b_max: number=150) => {
-      const randVal = (min: number, max: number) => Math.abs(Math.floor(Math.random() * (max - min) + min));
-      const r = randVal(r_min, r_max);
-      const g = randVal(g_min, g_max);
-      const b = randVal(b_min, b_max);
+    const randVal = (min: number, max: number) => Math.abs(Math.floor(Math.random() * (max - min) + min));
+    const randomColorRGB = () => {
+      const r = randVal(rgRGB.r_min, rgRGB.r_max);
+      const g = randVal(rgRGB.g_min, rgRGB.g_max);
+      const b = randVal(rgRGB.b_min, rgRGB.b_max);
       return `rgb(${r}, ${g}, ${b})`;
-    }
-    const randomColorHSL = (h_min: number=95, h_max: number=360, s_min: number=0, s_max: number=90, l_min: number=15, l_max: number=30) => {
-      const randVal = (min: number, max: number) => Math.abs(Math.floor(Math.random() * (max - min) + min));
-      const h = randVal(h_min, h_max);
-      const s = randVal(s_min, s_max);
-      const l = randVal(l_min, l_max);
+    };
+    const randomColorHSL = () => {
+      const h = randVal(rgHSL.h_min, rgHSL.h_max);
+      const s = randVal(rgHSL.s_min, rgHSL.s_max);
+      const l = randVal(rgHSL.l_min, rgHSL.l_max);
       return `hsl(${h}, ${s}%, ${l}%)`;
     };
     const genColors = (num_colors: number) => {
-      return Array.from({ length: num_colors }, () => randomColorHSL());
+      return Array.from({ length: num_colors }, () => randomColorRGB());
     };
 
     const fetchData = async () => {
@@ -45,7 +62,7 @@ export default function LandingPage({ url }: LandingPageProps) {
       }
     };
     if (!isLoaded) fetchData();
-  }, [url, isLoaded]);
+  }, [url, rgRGB, rgHSL, isLoaded]);
 
   if (!isLoaded) return <Container><Text>Loading...</Text></Container>;
   else return(
@@ -61,5 +78,21 @@ export default function LandingPage({ url }: LandingPageProps) {
 }
 
 LandingPage.defaultProps = {
-  url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQTIAE4rAi3VwxQ3zSHlBgZNg43gfMVJ-uYiXFDvdDHNQMYPTNyir155Vbv2o2KacdYb8BZSSIJI88A/pub?gid=0&single=true&output=csv"
+  url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQTIAE4rAi3VwxQ3zSHlBgZNg43gfMVJ-uYiXFDvdDHNQMYPTNyir155Vbv2o2KacdYb8BZSSIJI88A/pub?gid=0&single=true&output=csv",
+  rgRGB: {
+    r_min: 74,
+    r_max: 149,
+    g_min: 0,
+    g_max: 85,
+    b_min: 191,
+    b_max: 98,
+  },
+  rgHSL: {
+    h_min: 79,
+    h_max: 341,
+    s_min: 32,
+    s_max: 63,
+    l_min: 32,
+    l_max: 76,
+  },
 };

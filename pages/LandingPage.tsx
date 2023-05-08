@@ -13,15 +13,15 @@ export default function LandingPage({ url }: LandingPageProps) {
   const [isLoaded, setLoaded] = useState<boolean>(false);
 
   useEffect(() => {
-    const randomColor = (r_min=0, r_max=125, g_min=0, g_max=100, b_min=0, b_max=150) => {
-      const randVal = (min, max) => Math.abs(Math.floor(Math.random() * (max - min) + min));
+    const randomColor = (r_min: number=0, r_max: number=125, g_min: number=0, g_max: number=100, b_min: number=0, b_max: number=150) => {
+      const randVal = (min: number, max: number) => Math.abs(Math.floor(Math.random() * (max - min) + min));
       const r = randVal(r_min, r_max);
       const g = randVal(g_min, g_max);
       const b = randVal(b_min, b_max);
       return `rgb(${r}, ${g}, ${b})`;
     }
-    const randomColorHSL = (h_min=95, h_max=360, s_min=0, s_max=90, l_min=15, l_max=30) => {
-      const randVal = (min, max) => Math.abs(Math.floor(Math.random() * (max - min) + min));
+    const randomColorHSL = (h_min: number=95, h_max: number=360, s_min: number=0, s_max: number=90, l_min: number=15, l_max: number=30) => {
+      const randVal = (min: number, max: number) => Math.abs(Math.floor(Math.random() * (max - min) + min));
       const h = randVal(h_min, h_max);
       const s = randVal(s_min, s_max);
       const l = randVal(l_min, l_max);

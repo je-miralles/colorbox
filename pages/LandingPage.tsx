@@ -13,10 +13,13 @@ export default function LandingPage({ url }: LandingPageProps) {
   const [isLoaded, setLoaded] = useState<boolean>(false);
 
   useEffect(() => {
-    const randomColor = (max: number = 100) => {
-      const randVal = () => Math.floor(Math.random() * max);
-      return `rgb(${randVal()}, ${randVal()}, ${randVal()})`;
-    };
+    const randomColor = (r_min=0, r_max=125, g_min=0, g_max=100, b_min=0, b_max=150) => {
+      const randVal = (min, max) => Math.abs(Math.floor(Math.random() * (max - min) + min));
+      const r = randVal(r_min, r_max);
+      const g = randVal(g_min, g_max);
+      const b = randVal(b_min, b_max);
+      return `rgb(${r}, ${g}, ${b})`;
+    }
     const genColors = (num_colors: number) => {
       return Array.from({ length: num_colors }, () => randomColor());
     };

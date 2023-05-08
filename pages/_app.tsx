@@ -31,7 +31,7 @@ export default function App(props: AppProps) {
               '#4d4f66',
               '#34354a',
               '#2b2c3d', // dark colorScheme card color
-              '#2C2E33', // dark colorScheme body background color
+              '#0c0d21', // dark colorScheme body background color
               '#0c0d21',
               '#01010a',
             ],

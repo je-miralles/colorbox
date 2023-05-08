@@ -2,10 +2,10 @@ import { createStyles, Card, Text } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
   text_title: {
-    color: theme.colorScheme === 'dark' ? theme.colors.gray[5] : theme.colors.dark[8],
+    color: theme.colorScheme === 'dark' ? theme.colors.gray[4] : theme.colors.dark[8],
   },
   text: {
-    color: theme.colorScheme === 'dark' ? theme.colors.gray[6] : theme.colors.dark[8],
+    color: theme.colorScheme === 'dark' ? theme.colors.gray[3] : theme.colors.dark[8],
   },
 }));
 

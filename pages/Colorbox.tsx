@@ -5,6 +5,7 @@ import { color } from 'd3-color';
 import Colorcard, { ColorcardData } from './Colorcard';
 
 type ColorboxProps = {
+  numColors: number;
   rgRGB: randomRGBgen;
   rgHSL: randomHSLgen;
 };
@@ -25,7 +26,7 @@ type randomHSLgen = {
   l_max: number;
 };
 
-export default function Colorbox({ rgRGB, rgHSL }: ColorboxProps) {
+export default function Colorbox({ numColors, rgRGB, rgHSL }: ColorboxProps) {
   const [colors, setColors] = useState<ColorcardData[]>([]);
   const [isLoaded, setLoaded] = useState<boolean>(false);
 
@@ -83,6 +84,7 @@ export default function Colorbox({ rgRGB, rgHSL }: ColorboxProps) {
 }
 
 Colorbox.defaultProps = {
+  numColors: 64,
   rgRGB: {
     r_min: 74,
     r_max: 149,

@@ -4,7 +4,6 @@ import { Container, Grid, Text } from '@mantine/core';
 import Colorcard, { ColorcardData } from './Colorcard';
 
 type ColorboxProps = {
-  url: string;
   rgRGB: randomRGBgen;
   rgHSL: randomHSLgen;
 };
@@ -25,9 +24,8 @@ type randomHSLgen = {
   l_max: number;
 };
 
-export default function Colorbox({ url, rgRGB, rgHSL }: ColorboxProps) {
-  const [data, setData] = useState<ColorcardData[]>([]);
-  const [colors, setColors] = useState<string[]>([]);
+export default function Colorbox({ rgRGB, rgHSL }: ColorboxProps) {
+  const [colors, setColors] = useState<ColorcardData[]>([]);
   const [isLoaded, setLoaded] = useState<boolean>(false);
 
   useEffect(() => {
@@ -54,27 +52,23 @@ export default function Colorbox({ url, rgRGB, rgHSL }: ColorboxProps) {
 
     const fetchData = async () => {
       try {
-        const response = await fetch(url);
-        const csvText = await response.text();
-        const Papa = require('papaparse');
-        const theCsv = Papa.parse(csvText, {header: true});
-        setData([...theCsv.data]);
-        setColors([...genColors(theCsv.data.length)]);
+        const length = 16;
+        setColors([...genColors(length)]);
         setLoaded(true);
       } catch (error) {
         console.log("error", error);
       }
     };
     if (!isLoaded) fetchData();
-  }, [url, rgRGB, rgHSL, isLoaded]);
+  }, [rgRGB, rgHSL, isLoaded]);
 
   if (!isLoaded) return <Container><Text>Loading...</Text></Container>;
   else return(
     <Container>
       <Grid align="stretch">
-        {data.map((d, k) => (
+        {colors.map((d, k) => (
           <Grid.Col md={6} lg={3} key={k}>
-            <Colorcard data={d} color={colors[k]}></Colorcard>
+            <Colorcard color={d}></Colorcard>
           </Grid.Col>))}
       </Grid>
     </Container>
@@ -82,7 +76,6 @@ export default function Colorbox({ url, rgRGB, rgHSL }: ColorboxProps) {
 }
 
 Colorbox.defaultProps = {
-  url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQTIAE4rAi3VwxQ3zSHlBgZNg43gfMVJ-uYiXFDvdDHNQMYPTNyir155Vbv2o2KacdYb8BZSSIJI88A/pub?gid=0&single=true&output=csv",
   rgRGB: {
     r_min: 74,
     r_max: 149,

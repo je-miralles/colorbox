@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Container, Grid, Text } from '@mantine/core';
+import { rem, createStyles, Group, Container, Grid, Text, Button } from '@mantine/core';
 import { color } from 'd3-color';
 
 import Colorcard, { ColorcardData } from './Colorcard';
@@ -26,7 +26,15 @@ type randomHSLgen = {
   l_max: number;
 };
 
+const useStyles = createStyles((theme) => ({
+  button: {
+    paddingTop: rem(1),
+    paddingBottom: rem(5),
+  },
+}));
+
 export default function Colorbox({ numColors, rgRGB, rgHSL }: ColorboxProps) {
+  const { classes } = useStyles();
   const [colors, setColors] = useState<ColorcardData[]>([]);
   const [isLoaded, setLoaded] = useState<boolean>(false);
 
@@ -60,19 +68,23 @@ export default function Colorbox({ numColors, rgRGB, rgHSL }: ColorboxProps) {
 
     const fetchData = async () => {
       try {
-        const length = 16;
-        setColors([...genColors(length)]);
+        setColors([...genColors(numColors)]);
         setLoaded(true);
       } catch (error) {
         console.log("error", error);
       }
     };
     if (!isLoaded) fetchData();
-  }, [rgRGB, rgHSL, isLoaded]);
+  }, [numColors, rgRGB, rgHSL, isLoaded]);
 
   if (!isLoaded) return <Container><Text>Loading...</Text></Container>;
   else return(
     <Container>
+      <Group className={classes.button} position="center">
+        <Button compact onClick={(event) => event.preventDefault()}>
+          Randomize
+        </Button>
+      </Group>
       <Grid align="stretch">
         {colors.map((d, k) => (
           <Grid.Col sm={3} md={3} key={k}>

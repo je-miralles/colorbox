@@ -22,6 +22,13 @@ export default function App(props: AppProps) {
         theme={{
           /** Put your mantine theme override here */
           colorScheme: "light",
+          breakpoints: {
+            xs: '20em', // ~ 720px
+            sm: '45em', // ~ 800px
+            md: '55em', // ~ 880px
+            lg: '70em', // ~ 1100px
+            xl: '88em',
+          },
           colors: {
             dark: [
               '#C1C2C5', // dark colorScheme text color

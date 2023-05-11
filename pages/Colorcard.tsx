@@ -1,11 +1,25 @@
-import { createStyles, Card, Text } from '@mantine/core';
+import { rem, createStyles, Card, Text } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
   text_title: {
-    color: theme.colorScheme === 'dark' ? theme.colors.gray[4] : theme.colors.dark[8],
+    color: theme.colorScheme === 'dark' ? theme.colors.gray[4] : theme.colors.black,
+    fontSize: rem(14),
+    [theme.fn.smallerThan('sm')]: {
+      fontSize: rem(11),
+    },
+    [theme.fn.largerThan('md')]: {
+      fontSize: rem(11),
+    },
   },
   text: {
-    color: theme.colorScheme === 'dark' ? theme.colors.gray[3] : theme.colors.dark[8],
+    color: theme.colorScheme === 'dark' ? theme.colors.gray[3] : theme.colors.black,
+    fontSize: rem(12),
+    [theme.fn.smallerThan('xs')]: {
+      fontSize: rem(9),
+    },
+    [theme.fn.largerThan('md')]: {
+      fontSize: rem(9),
+    },
   },
 }));
 
@@ -28,7 +42,7 @@ export default function Colorcard({ color }: ColorcardProps) {
       <Text className={classes.text_title} weight={500} size="lg" mb="md">
         {color.code}
       </Text>
-      <Text className={classes.text}  size="sm" lineClamp={10}>
+      <Text className={classes.text} lineClamp={10}>
         {color.string}
       </Text>
     </Card>

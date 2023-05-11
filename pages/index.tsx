@@ -7,11 +7,6 @@ const useStyles = createStyles((theme) => ({
     position: 'relative',
     paddingTop: rem(12),
     paddingBottom: rem(12),
-
-    [theme.fn.smallerThan('sm')]: {
-      paddingTop: rem(80),
-      paddingBottom: rem(60),
-    },
   },
 
   title: {
@@ -20,14 +15,13 @@ const useStyles = createStyles((theme) => ({
     fontSize: rem(32),
     letterSpacing: -1,
 
-    color: theme.colorScheme === 'dark' ? theme.colors.gray[5] : theme.colors.dark[4],
+    color: theme.colorScheme === 'dark' ? theme.colors.gray[5] : theme.colors.black,
 
     marginBottom: theme.spacing.xs,
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
 
-    [theme.fn.smallerThan('xs')]: {
+    [theme.fn.smallerThan('md')]: {
       fontSize: rem(28),
-      textAlign: 'left',
     },
   },
 }));

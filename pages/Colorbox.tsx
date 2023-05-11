@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { rem, createStyles, Group, Container, Grid, Text, Button } from '@mantine/core';
+import { useViewportSize } from '@mantine/hooks';
 import { color } from 'd3-color';
 
 import Colorcard, { ColorcardData } from './Colorcard';
@@ -29,7 +30,16 @@ type randomHSLgen = {
 const useStyles = createStyles((theme) => ({
   button: {
     paddingTop: rem(1),
-    paddingBottom: rem(5),
+    paddingBottom: rem(1),
+  },
+  centertext: {
+    paddingTop: rem(1),
+    paddingBottom: rem(1),
+    textAlign: 'center',
+    color: theme.colorScheme === 'dark' ? theme.colors.gray[5] : theme.colors.black,
+    [theme.fn.smallerThan('sm')]: {
+      fontSize: rem(10),
+    },
   },
 }));
 
@@ -37,6 +47,7 @@ export default function Colorbox({ numColors, rgRGB, rgHSL }: ColorboxProps) {
   const { classes } = useStyles();
   const [colors, setColors] = useState<ColorcardData[]>([]);
   const [isLoaded, setLoaded] = useState<boolean>(false);
+  const { height, width } = useViewportSize();
 
   const randVal = (min: number, max: number) => Math.abs(Math.floor(Math.random() * (max - min) + min));
   const randomColorRGB = () => {
@@ -85,9 +96,12 @@ export default function Colorbox({ numColors, rgRGB, rgHSL }: ColorboxProps) {
           Randomize
         </Button>
       </Group>
-      <Grid align="stretch">
+      <Text className={classes.centertext} weight={500} size="lg" mb="md">
+        h_min:{rgHSL.h_min} h_max:{rgHSL.h_max} s_min:{rgHSL.s_min} s_max:{rgHSL.s_max} l_min:{rgHSL.l_min} l_max{rgHSL.l_max}
+      </Text>
+      <Grid columns={24} justify="center" align="stretch">
         {colors.map((d, k) => (
-          <Grid.Col sm={3} md={3} key={k}>
+          <Grid.Col xs={6} lg={4} key={k}>
             <Colorcard color={d}></Colorcard>
           </Grid.Col>))}
       </Grid>

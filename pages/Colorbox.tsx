@@ -35,18 +35,22 @@ export default function Colorbox({ rgRGB, rgHSL }: ColorboxProps) {
       const r = randVal(rgRGB.r_min, rgRGB.r_max);
       const g = randVal(rgRGB.g_min, rgRGB.g_max);
       const b = randVal(rgRGB.b_min, rgRGB.b_max);
+      const newcolor = color(`rgb(${r}, ${g}, ${b})`);
+
       return ({
         string: `rgb(${r}, ${g}, ${b})`,
-        code: color(`rgb(${r}, ${g}, ${b})`).formatHex(),
+        code: newcolor ? newcolor.formatHex() : "#888888",
       });
     };
     const randomColorHSL = () => {
       const h = randVal(rgHSL.h_min, rgHSL.h_max);
       const s = randVal(rgHSL.s_min, rgHSL.s_max);
       const l = randVal(rgHSL.l_min, rgHSL.l_max);
+      const newcolor = color(`hsl(${h}, ${s}%, ${l}%)`);
+
       return ({
         string: `hsl(${h}, ${s}%, ${l}%)`,
-        code: color(`hsl(${h}, ${s}%, ${l}%)`).formatHex(),
+        code: newcolor ? newcolor.formatHex() : "#888888",
       });
     };
     const genColors = (num_colors: number, randFunc: () => ColorcardData=randomColorHSL) => {

@@ -10,6 +10,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export type ColorcardData = {
+  'string': string;
   'code': string;
 };
 
@@ -24,8 +25,11 @@ export default function Colorcard({ color }: ColorcardProps) {
       radius="md"
       sx={{ backgroundColor: `${color.code}` }}
     >
-      <Text className={classes.text}  size="sm" lineClamp={10}>
+      <Text className={classes.text_title} weight={500} size="lg" mb="md">
         {color.code}
+      </Text>
+      <Text className={classes.text}  size="sm" lineClamp={10}>
+        {color.string}
       </Text>
     </Card>
   );

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Container, Grid, Text } from '@mantine/core';
+import { color } from 'd3-color';
 
 import Colorcard, { ColorcardData } from './Colorcard';
 
@@ -35,7 +36,8 @@ export default function Colorbox({ rgRGB, rgHSL }: ColorboxProps) {
       const g = randVal(rgRGB.g_min, rgRGB.g_max);
       const b = randVal(rgRGB.b_min, rgRGB.b_max);
       return ({
-        code: `rgb(${r}, ${g}, ${b})`,
+        string: `rgb(${r}, ${g}, ${b})`,
+        code: color(`rgb(${r}, ${g}, ${b})`).formatHex(),
       });
     };
     const randomColorHSL = () => {
@@ -43,10 +45,11 @@ export default function Colorbox({ rgRGB, rgHSL }: ColorboxProps) {
       const s = randVal(rgHSL.s_min, rgHSL.s_max);
       const l = randVal(rgHSL.l_min, rgHSL.l_max);
       return ({
-        code: `hsl(${h}, ${s}%, ${l}%)`,
+        string: `hsl(${h}, ${s}%, ${l}%)`,
+        code: color(`hsl(${h}, ${s}%, ${l}%)`).formatHex(),
       });
     };
-    const genColors = (num_colors: number, randFunc: () => string=randomColorHSL) => {
+    const genColors = (num_colors: number, randFunc: () => ColorcardData=randomColorHSL) => {
       return Array.from({ length: num_colors }, () => randFunc());
     };
 

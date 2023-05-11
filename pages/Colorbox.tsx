@@ -38,34 +38,34 @@ export default function Colorbox({ numColors, rgRGB, rgHSL }: ColorboxProps) {
   const [colors, setColors] = useState<ColorcardData[]>([]);
   const [isLoaded, setLoaded] = useState<boolean>(false);
 
+  const randVal = (min: number, max: number) => Math.abs(Math.floor(Math.random() * (max - min) + min));
+  const randomColorRGB = () => {
+    const r = randVal(rgRGB.r_min, rgRGB.r_max);
+    const g = randVal(rgRGB.g_min, rgRGB.g_max);
+    const b = randVal(rgRGB.b_min, rgRGB.b_max);
+    const newcolor = color(`rgb(${r}, ${g}, ${b})`);
+
+    return ({
+      string: `rgb(${r}, ${g}, ${b})`,
+      code: newcolor ? newcolor.formatHex() : "#888888",
+    });
+  };
+  const randomColorHSL = () => {
+    const h = randVal(rgHSL.h_min, rgHSL.h_max);
+    const s = randVal(rgHSL.s_min, rgHSL.s_max);
+    const l = randVal(rgHSL.l_min, rgHSL.l_max);
+    const newcolor = color(`hsl(${h}, ${s}%, ${l}%)`);
+
+    return ({
+      string: `hsl(${h}, ${s}%, ${l}%)`,
+      code: newcolor ? newcolor.formatHex() : "#888888",
+    });
+  };
+  const genColors = (num_colors: number, randFunc: () => ColorcardData=randomColorHSL) => {
+    return Array.from({ length: num_colors }, () => randFunc());
+  };
+
   useEffect(() => {
-    const randVal = (min: number, max: number) => Math.abs(Math.floor(Math.random() * (max - min) + min));
-    const randomColorRGB = () => {
-      const r = randVal(rgRGB.r_min, rgRGB.r_max);
-      const g = randVal(rgRGB.g_min, rgRGB.g_max);
-      const b = randVal(rgRGB.b_min, rgRGB.b_max);
-      const newcolor = color(`rgb(${r}, ${g}, ${b})`);
-
-      return ({
-        string: `rgb(${r}, ${g}, ${b})`,
-        code: newcolor ? newcolor.formatHex() : "#888888",
-      });
-    };
-    const randomColorHSL = () => {
-      const h = randVal(rgHSL.h_min, rgHSL.h_max);
-      const s = randVal(rgHSL.s_min, rgHSL.s_max);
-      const l = randVal(rgHSL.l_min, rgHSL.l_max);
-      const newcolor = color(`hsl(${h}, ${s}%, ${l}%)`);
-
-      return ({
-        string: `hsl(${h}, ${s}%, ${l}%)`,
-        code: newcolor ? newcolor.formatHex() : "#888888",
-      });
-    };
-    const genColors = (num_colors: number, randFunc: () => ColorcardData=randomColorHSL) => {
-      return Array.from({ length: num_colors }, () => randFunc());
-    };
-
     const fetchData = async () => {
       try {
         setColors([...genColors(numColors)]);
@@ -75,13 +75,13 @@ export default function Colorbox({ numColors, rgRGB, rgHSL }: ColorboxProps) {
       }
     };
     if (!isLoaded) fetchData();
-  }, [numColors, rgRGB, rgHSL, isLoaded]);
+  }, [numColors, genColors, rgRGB, rgHSL, isLoaded]);
 
   if (!isLoaded) return <Container><Text>Loading...</Text></Container>;
   else return(
     <Container>
       <Group className={classes.button} position="center">
-        <Button compact onClick={(event) => event.preventDefault()}>
+        <Button compact onClick={(event) => setColors([...genColors(numColors)])}>
           Randomize
         </Button>
       </Group>

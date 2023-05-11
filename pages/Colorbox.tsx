@@ -3,7 +3,7 @@ import { Container, Grid, Text } from '@mantine/core';
 
 import JobCard, { JobCardData } from './JobCard';
 
-type LandingPageProps = {
+type ColorboxProps = {
   url: string;
   rgRGB: randomRGBgen;
   rgHSL: randomHSLgen;
@@ -25,7 +25,7 @@ type randomHSLgen = {
   l_max: number;
 };
 
-export default function LandingPage({ url, rgRGB, rgHSL }: LandingPageProps) {
+export default function Colorbox({ url, rgRGB, rgHSL }: ColorboxProps) {
   const [data, setData] = useState<JobCardData[]>([]);
   const [colors, setColors] = useState<string[]>([]);
   const [isLoaded, setLoaded] = useState<boolean>(false);
@@ -77,7 +77,7 @@ export default function LandingPage({ url, rgRGB, rgHSL }: LandingPageProps) {
   );
 }
 
-LandingPage.defaultProps = {
+Colorbox.defaultProps = {
   url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQTIAE4rAi3VwxQ3zSHlBgZNg43gfMVJ-uYiXFDvdDHNQMYPTNyir155Vbv2o2KacdYb8BZSSIJI88A/pub?gid=0&single=true&output=csv",
   rgRGB: {
     r_min: 74,

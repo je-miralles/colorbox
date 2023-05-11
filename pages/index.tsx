@@ -1,12 +1,12 @@
 import { createStyles, rem, Container, Title } from '@mantine/core';
 
-import LandingPage from './LandingPage';
+import Colorbox from './Colorbox';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
     position: 'relative',
-    paddingTop: rem(120),
-    paddingBottom: rem(80),
+    paddingTop: rem(12),
+    paddingBottom: rem(12),
 
     [theme.fn.smallerThan('sm')]: {
       paddingTop: rem(80),
@@ -17,7 +17,7 @@ const useStyles = createStyles((theme) => ({
   title: {
     textAlign: 'center',
     fontWeight: 800,
-    fontSize: rem(40),
+    fontSize: rem(32),
     letterSpacing: -1,
 
     color: theme.colorScheme === 'dark' ? theme.colors.gray[5] : theme.colors.dark[4],
@@ -41,7 +41,7 @@ export default function IndexPage() {
           Colorbox
         </Title>
       </Container>
-      <LandingPage />
+      <Colorbox />
     </main>
   );
 }

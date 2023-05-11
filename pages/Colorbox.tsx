@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Container, Grid, Text } from '@mantine/core';
 
-import JobCard, { JobCardData } from './JobCard';
+import Colorcard, { ColorcardData } from './Colorcard';
 
 type ColorboxProps = {
   url: string;
@@ -26,7 +26,7 @@ type randomHSLgen = {
 };
 
 export default function Colorbox({ url, rgRGB, rgHSL }: ColorboxProps) {
-  const [data, setData] = useState<JobCardData[]>([]);
+  const [data, setData] = useState<ColorcardData[]>([]);
   const [colors, setColors] = useState<string[]>([]);
   const [isLoaded, setLoaded] = useState<boolean>(false);
 
@@ -36,13 +36,17 @@ export default function Colorbox({ url, rgRGB, rgHSL }: ColorboxProps) {
       const r = randVal(rgRGB.r_min, rgRGB.r_max);
       const g = randVal(rgRGB.g_min, rgRGB.g_max);
       const b = randVal(rgRGB.b_min, rgRGB.b_max);
-      return `rgb(${r}, ${g}, ${b})`;
+      return ({
+        code: `rgb(${r}, ${g}, ${b})`,
+      });
     };
     const randomColorHSL = () => {
       const h = randVal(rgHSL.h_min, rgHSL.h_max);
       const s = randVal(rgHSL.s_min, rgHSL.s_max);
       const l = randVal(rgHSL.l_min, rgHSL.l_max);
-      return `hsl(${h}, ${s}%, ${l}%)`;
+      return ({
+        code: `hsl(${h}, ${s}%, ${l}%)`,
+      });
     };
     const genColors = (num_colors: number, randFunc: () => string=randomColorHSL) => {
       return Array.from({ length: num_colors }, () => randFunc());
@@ -70,7 +74,7 @@ export default function Colorbox({ url, rgRGB, rgHSL }: ColorboxProps) {
       <Grid align="stretch">
         {data.map((d, k) => (
           <Grid.Col md={6} lg={3} key={k}>
-            <JobCard data={d} color={colors[k]}></JobCard>
+            <Colorcard data={d} color={colors[k]}></Colorcard>
           </Grid.Col>))}
       </Grid>
     </Container>

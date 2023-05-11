@@ -70,7 +70,7 @@ export default function Colorbox({ rgRGB, rgHSL }: ColorboxProps) {
     <Container>
       <Grid align="stretch">
         {colors.map((d, k) => (
-          <Grid.Col md={6} lg={3} key={k}>
+          <Grid.Col sm={3} md={3} key={k}>
             <Colorcard color={d}></Colorcard>
           </Grid.Col>))}
       </Grid>

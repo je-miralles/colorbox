@@ -8,7 +8,7 @@ export default function App(props: AppProps) {
   return(
     <>
       <Head>
-        <title>Dark Job Board</title>
+        <title>Colorbox</title>
         <link rel="shortcut icon" href="favicon.svg" />
         <meta
           name="viewport"
@@ -21,7 +21,7 @@ export default function App(props: AppProps) {
         withNormalizeCSS
         theme={{
           /** Put your mantine theme override here */
-          colorScheme: "dark",
+          colorScheme: "light",
           colors: {
             dark: [
               '#C1C2C5', // dark colorScheme text color

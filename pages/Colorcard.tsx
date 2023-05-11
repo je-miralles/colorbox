@@ -10,8 +10,8 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export type ColorcardData = {
-  'string': string;
-  'code': string;
+  string: string;
+  code: string;
 };
 
 type ColorcardProps = {

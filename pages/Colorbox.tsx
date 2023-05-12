@@ -69,7 +69,7 @@ const randomColorRGB = (colorKnobs: colorGen) => {
   const b = randVal(colorKnobs.rgb.b_min, colorKnobs.rgb.b_max);
   const newcolor = color(`rgb(${r}, ${g}, ${b})`);
   return ({
-    string: `rgb(${r}, ${g}, ${b})`,
+    string: `rgb(${r},${g},${b})`,
     code: newcolor ? newcolor.formatHex() : "#888888",
   });
 };
@@ -79,7 +79,7 @@ const randomColorHSL = (colorKnobs: colorGen) => {
   const l = randVal(colorKnobs.hsl.l_min, colorKnobs.hsl.l_max);
   const newcolor = color(`hsl(${h}, ${s}%, ${l}%)`);
   return ({
-    string: `hsl(${h}, ${s}%, ${l}%)`,
+    string: `hsl(${h},${s}%,${l}%)`,
     code: newcolor ? newcolor.formatHex() : "#888888",
   });
 };

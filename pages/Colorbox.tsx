@@ -91,13 +91,33 @@ const knobsDisplay = (colorKnobs: colorGen) => {
   )
 };
 
+const defaultKnobs = {
+  method: "hsl",
+  rgb: {
+    r_min: 74,
+    r_max: 149,
+    g_min: 0,
+    g_max: 85,
+    b_min: 191,
+    b_max: 98,
+  },
+  hsl: {
+    h_min: 0,
+    h_max: 360,
+    s_min: 32,
+    s_max: 62,
+    l_min: 25,
+    l_max: 39,
+  },
+};
+
 let didInit = false;
 
 export default function Colorbox({ numColors }: ColorboxProps) {
   const { classes } = useStyles();
   const { height, width } = useViewportSize();
   const [colors, setColors] = useState<ColorcardData[]>([]);
-  const [colorKnobs, setColorKnobs] = useState<colorGen>({});
+  const [colorKnobs, setColorKnobs] = useState<colorGen>(defaultKnobs);
 
   const genColors = useCallback(() => {
     let newColors;

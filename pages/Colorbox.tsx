@@ -123,7 +123,11 @@ export default function Colorbox({ numColors, colorKnobs }: ColorboxProps) {
   else return(
     <Container>
       <Group position="center">
-        <Button compact onClick={(event) => randColorButton()}>
+        <Button
+          compact
+          onClick={(event) => randColorButton()}
+          sx={{ backgroundColor: `${colors[numColors/2].code}` }}
+        >
           Randomize
         </Button>
       </Group>

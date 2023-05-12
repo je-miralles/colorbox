@@ -128,9 +128,9 @@ export default function Colorbox({ numColors, colorKnobs }: ColorboxProps) {
           onClick={(event) => randColorButton()}
           styles={(theme) => ({
             root: {
-              backgroundColor: `${colors[numColors/2].code}`,
+              backgroundColor: `${colors[Math.round(numColors/2)].code}`,
               '&:not([data-disabled])': theme.fn.hover({
-                backgroundColor: theme.fn.darken(`${colors[numColors/2].code}`, 0.5),
+                backgroundColor: theme.fn.darken(`${colors[Math.round(numColors/2)].code}`, 0.5),
               }),
             },
           })}

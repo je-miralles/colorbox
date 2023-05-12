@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { rem, createStyles, Group, Container, Grid, Text, Button } from '@mantine/core';
+import { rem, createStyles, Group, Container, Center, Grid, Text, Button } from '@mantine/core';
 import { useViewportSize } from '@mantine/hooks';
 import { color } from 'd3-color';
 
@@ -119,7 +119,7 @@ export default function Colorbox({ numColors, colorKnobs }: ColorboxProps) {
     if (!didInit) setRandomColors();
   }, [genColors, numColors, colorKnobs]);
 
-  if (!didInit) return <Container><Text>Loading...</Text></Container>;
+  if (!didInit) return <Center><Text>Loading...</Text></Center>;
   else return(
     <Container>
       <Group position="center">

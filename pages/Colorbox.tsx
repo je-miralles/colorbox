@@ -126,7 +126,14 @@ export default function Colorbox({ numColors, colorKnobs }: ColorboxProps) {
         <Button
           compact
           onClick={(event) => randColorButton()}
-          sx={{ backgroundColor: `${colors[numColors/2].code}` }}
+          styles={(theme) => ({
+            root: {
+              backgroundColor: `${colors[numColors/2].code}`,
+              '&:not([data-disabled])': theme.fn.hover({
+                backgroundColor: theme.fn.darken(`${colors[numColors/2].code}`, 0.5),
+              }),
+            },
+          })}
         >
           Randomize
         </Button>

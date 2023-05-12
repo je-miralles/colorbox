@@ -45,22 +45,22 @@ const useStyles = createStyles((theme) => ({
 const randVal = (min: number, max: number) => { return Math.abs(Math.floor(Math.random() * (max - min) + min)) };
 const genKnobsRGB = () => {
   return({
-    r_min: randVal(1, 255),
-    r_max: randVal(1, 255),
-    g_min: randVal(1, 255),
-    g_max: randVal(1, 255),
-    b_min: randVal(1, 255),
-    b_max: randVal(1, 255),
+    r_min: randVal(0, 255),
+    r_max: randVal(0, 255),
+    g_min: randVal(0, 255),
+    g_max: randVal(0, 255),
+    b_min: randVal(0, 255),
+    b_max: randVal(0, 255),
   });
 };
 const genKnobsHSL = () => {
   return({
-    h_min: randVal(1, 360),
-    h_max: randVal(1, 360),
-    s_min: randVal(1, 100),
-    s_max: randVal(1, 100),
-    l_min: randVal(1, 100),
-    l_max: randVal(1, 100),
+    h_min: randVal(0, 360),
+    h_max: randVal(0, 360),
+    s_min: randVal(0, 100),
+    s_max: randVal(0, 100),
+    l_min: randVal(0, 100),
+    l_max: randVal(0, 100),
   });
 };
 const randomColorRGB = (colorKnobs: colorGen) => {

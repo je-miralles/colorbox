@@ -28,15 +28,10 @@ type randomHSLgen = {
 };
 
 const useStyles = createStyles((theme) => ({
-  button: {
-    paddingTop: rem(1),
-    paddingBottom: rem(1),
-  },
   centertext: {
-    paddingTop: rem(1),
-    paddingBottom: rem(1),
     textAlign: 'center',
     color: theme.colorScheme === 'dark' ? theme.colors.gray[5] : theme.colors.black,
+    fontSize: rem(12),
     [theme.fn.smallerThan('sm')]: {
       fontSize: rem(10),
     },
@@ -47,8 +42,8 @@ let didInit = false;
 
 export default function Colorbox({ numColors, rgRGB, rgHSL }: ColorboxProps) {
   const { classes } = useStyles();
-  const [colors, setColors] = useState<ColorcardData[]>([]);
   const { height, width } = useViewportSize();
+  const [colors, setColors] = useState<ColorcardData[]>([]);
 
   const genColors = useCallback((num_colors: number, method: string="hsl") => {
       const randVal = (min: number, max: number) => Math.abs(Math.floor(Math.random() * (max - min) + min));
@@ -91,18 +86,16 @@ export default function Colorbox({ numColors, rgRGB, rgHSL }: ColorboxProps) {
   if (!didInit) return <Container><Text>Loading...</Text></Container>;
   else return(
     <Container>
-      <Group className={classes.button} position="center">
+      <Group position="center">
         <Button compact onClick={(event) => setColors([...genColors(numColors)])}>
           Randomize
         </Button>
       </Group>
-      <Text className={classes.centertext} weight={500} size="lg" mb="md">
-        h_min:{rgHSL.h_min} h_max:{rgHSL.h_max} s_min:{rgHSL.s_min} s_max:{rgHSL.s_max} l_min:{rgHSL.l_min} l_max{rgHSL.l_max}
+      <Text className={classes.centertext} lh={rem(3)} weight={500} size="lg" mb="md">
+        <p>h_min:{rgHSL.h_min} h_max:{rgHSL.h_max} s_min:{rgHSL.s_min} s_max:{rgHSL.s_max} l_min:{rgHSL.l_min} l_max{rgHSL.l_max}</p>
+        <p>viewport: {width}, {height} ({width/16}, {height/16})</p>
       </Text>
-      <Text className={classes.centertext} weight={500} size="lg" mb="md">
-        viewport: {width}, {height} ({width/16}, {height/16})
-      </Text>
-      <Grid columns={24} justify="center" align="stretch">
+      <Grid m="xs" columns={24} justify="center" align="stretch">
         {colors.map((d, k) => (
           <Grid.Col xs={8} md={6} lg={4} key={k}>
             <Colorcard color={d}></Colorcard>

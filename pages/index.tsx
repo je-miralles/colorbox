@@ -5,8 +5,8 @@ import Colorbox from './Colorbox';
 const useStyles = createStyles((theme) => ({
   wrapper: {
     position: 'relative',
-    paddingTop: rem(12),
-    paddingBottom: rem(12),
+    paddingTop: rem(5),
+    paddingBottom: rem(5),
   },
 
   title: {

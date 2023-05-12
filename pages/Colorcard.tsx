@@ -36,6 +36,7 @@ export default function Colorcard({ color }: ColorcardProps) {
   const { classes } = useStyles();
   return(
     <Card
+      p="xs"
       radius="md"
       sx={{ backgroundColor: `${color.code}` }}
     >

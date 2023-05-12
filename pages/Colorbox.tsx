@@ -38,6 +38,28 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
+const randVal = (min: number, max: number) => Math.abs(Math.floor(Math.random() * (max - min) + min));
+const randomColorRGB = (rgRGB: randomRGBgen, rgHSL: randomHSLgen) => {
+  const r = randVal(rgRGB.r_min, rgRGB.r_max);
+  const g = randVal(rgRGB.g_min, rgRGB.g_max);
+  const b = randVal(rgRGB.b_min, rgRGB.b_max);
+  const newcolor = color(`rgb(${r}, ${g}, ${b})`);
+  return ({
+    string: `rgb(${r}, ${g}, ${b})`,
+    code: newcolor ? newcolor.formatHex() : "#888888",
+  });
+};
+const randomColorHSL = (rgRGB: randomRGBgen, rgHSL: randomHSLgen) => {
+  const h = randVal(rgHSL.h_min, rgHSL.h_max);
+  const s = randVal(rgHSL.s_min, rgHSL.s_max);
+  const l = randVal(rgHSL.l_min, rgHSL.l_max);
+  const newcolor = color(`hsl(${h}, ${s}%, ${l}%)`);
+  return ({
+    string: `hsl(${h}, ${s}%, ${l}%)`,
+    code: newcolor ? newcolor.formatHex() : "#888888",
+  });
+};
+
 let didInit = false;
 
 export default function Colorbox({ numColors, rgRGB, rgHSL }: ColorboxProps) {
@@ -45,49 +67,27 @@ export default function Colorbox({ numColors, rgRGB, rgHSL }: ColorboxProps) {
   const { height, width } = useViewportSize();
   const [colors, setColors] = useState<ColorcardData[]>([]);
 
-  const genColors = useCallback((num_colors: number, method: string="hsl") => {
-      const randVal = (min: number, max: number) => Math.abs(Math.floor(Math.random() * (max - min) + min));
-      const randomColorRGB = () => {
-        const r = randVal(rgRGB.r_min, rgRGB.r_max);
-        const g = randVal(rgRGB.g_min, rgRGB.g_max);
-        const b = randVal(rgRGB.b_min, rgRGB.b_max);
-        const newcolor = color(`rgb(${r}, ${g}, ${b})`);
-        return ({
-          string: `rgb(${r}, ${g}, ${b})`,
-          code: newcolor ? newcolor.formatHex() : "#888888",
-        });
-      };
-      const randomColorHSL = () => {
-        const h = randVal(rgHSL.h_min, rgHSL.h_max);
-        const s = randVal(rgHSL.s_min, rgHSL.s_max);
-        const l = randVal(rgHSL.l_min, rgHSL.l_max);
-        const newcolor = color(`hsl(${h}, ${s}%, ${l}%)`);
-        return ({
-          string: `hsl(${h}, ${s}%, ${l}%)`,
-          code: newcolor ? newcolor.formatHex() : "#888888",
-        });
-      };
-
-      if (method == "hsl") {
-        return Array.from({ length: num_colors }, () => randomColorHSL());
-      } else {
-        return Array.from({ length: num_colors }, () => randomColorRGB());
-      }
-  }, [rgRGB, rgHSL]);
+  const genColors = useCallback((num_colors: number, rgRGB: randomRGBgen, rgHSL: randomHSLgen, method: string="hsl") => {
+    if (method == "hsl") {
+      return Array.from({ length: num_colors }, () => randomColorHSL(rgRGB, rgHSL));
+    } else {
+      return Array.from({ length: num_colors }, () => randomColorRGB(rgRGB, rgHSL));
+    }
+  }, []);
 
   useEffect(() => {
     const setRandomColors = () => {
-      setColors([...genColors(numColors)]);
+      setColors([...genColors(numColors, rgRGB, rgHSL)]);
       didInit = true;
     };
     if (!didInit) setRandomColors();
-  }, [numColors, genColors]);
+  }, [numColors, genColors, rgRGB, rgHSL]);
 
   if (!didInit) return <Container><Text>Loading...</Text></Container>;
   else return(
     <Container>
       <Group position="center">
-        <Button compact onClick={(event) => setColors([...genColors(numColors)])}>
+        <Button compact onClick={(event) => setColors([...genColors(numColors, rgRGB, rgHSL)])}>
           Randomize
         </Button>
       </Group>

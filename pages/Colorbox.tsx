@@ -28,7 +28,6 @@ type colorGen = {
 };
 type ColorboxProps = {
   numColors: number;
-  colorKnobs: colorGen
 };
 
 const useStyles = createStyles((theme) => ({
@@ -84,40 +83,47 @@ const randomColorHSL = (colorKnobs: colorGen) => {
   });
 };
 
+const knobsDisplay = (colorKnobs: colorGen) => {
+  return colorKnobs.method == "hsl" ? (
+    <p>h.min {colorKnobs.hsl.h_min} h.max {colorKnobs.hsl.h_max} s.min {colorKnobs.hsl.s_min} s.max {colorKnobs.hsl.s_max} l.min {colorKnobs.hsl.l_min} l.max {colorKnobs.hsl.l_max}</p>
+  ) : (
+    <p>r.min {colorKnobs.rgb.r_min} r.max {colorKnobs.rgb.r_max} g.min {colorKnobs.rgb.g_min} g.max {colorKnobs.rgb.g_max} b.min {colorKnobs.rgb.b_min} b.max {colorKnobs.rgb.b_max}</p>
+  )
+};
+
 let didInit = false;
 
-export default function Colorbox({ numColors, colorKnobs }: ColorboxProps) {
+export default function Colorbox({ numColors }: ColorboxProps) {
   const { classes } = useStyles();
   const { height, width } = useViewportSize();
   const [colors, setColors] = useState<ColorcardData[]>([]);
+  const [colorKnobs, setColorKnobs] = useState<colorGen>({});
 
-  const genColors = useCallback((num_colors: number, colorKnobs: colorGen, method: string="hsl") => {
-    if (method == "hsl") {
-      return Array.from({ length: num_colors }, () => randomColorHSL(colorKnobs));
-    } else {
-      return Array.from({ length: num_colors }, () => randomColorRGB(colorKnobs));
-    }
-  }, []);
-
-  const randColorButton = () => {
+  const genColors = useCallback(() => {
+    let newColors;
     const method = Math.random() > 0.5 ? "hsl" : "rgb";
     const rgRGB = genKnobsRGB();
     const rgHSL = genKnobsHSL();
-    const colorKnobs = {
+    const newColorKnobs = {
       method: method,
       rgb: rgRGB,
       hsl: rgHSL,
     };
-    setColors([...genColors(numColors, colorKnobs, method)])
-  }
+    if (method == "hsl") {
+      newColors = Array.from({ length: numColors }, () => randomColorHSL(newColorKnobs));
+    } else {
+      newColors = Array.from({ length: numColors }, () => randomColorRGB(newColorKnobs));
+    }
+    setColorKnobs(newColorKnobs);
+    setColors([...newColors]);
+  }, [numColors]);
 
   useEffect(() => {
-    const setRandomColors = () => {
-      setColors([...genColors(numColors, colorKnobs)]);
+    if (!didInit) {
+      genColors();
       didInit = true;
-    };
-    if (!didInit) setRandomColors();
-  }, [genColors, numColors, colorKnobs]);
+    }
+  }, [genColors]);
 
   if (!didInit) return <Center><Text>Loading...</Text></Center>;
   else return(
@@ -125,7 +131,7 @@ export default function Colorbox({ numColors, colorKnobs }: ColorboxProps) {
       <Group position="center">
         <Button
           compact
-          onClick={(event) => randColorButton()}
+          onClick={(event) => genColors()}
           styles={(theme) => ({
             root: {
               backgroundColor: `${colors[Math.round(numColors/2)].code}`,
@@ -144,29 +150,13 @@ export default function Colorbox({ numColors, colorKnobs }: ColorboxProps) {
             <Colorcard color={d}></Colorcard>
           </Grid.Col>))}
       </Grid>
+      <Text className={classes.centertext} lh={rem(3)} weight={500} size="lg" mb="md">
+        {knobsDisplay(colorKnobs)}
+      </Text>
     </Container>
   );
 }
 
 Colorbox.defaultProps = {
   numColors: 64,
-  colorKnobs: {
-    method: "hsl",
-    rgb: {
-      r_min: 74,
-      r_max: 149,
-      g_min: 0,
-      g_max: 85,
-      b_min: 191,
-      b_max: 98,
-    },
-    hsl: {
-      h_min: 0,
-      h_max: 360,
-      s_min: 32,
-      s_max: 62,
-      l_min: 25,
-      l_max: 39,
-    },
-  }
 };

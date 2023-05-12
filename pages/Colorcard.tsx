@@ -7,7 +7,7 @@ const useStyles = createStyles((theme) => ({
     [theme.fn.smallerThan('sm')]: {
       fontSize: rem(11),
     },
-    [theme.fn.largerThan('lg')]: {
+    [theme.fn.largerThan('md')]: {
       fontSize: rem(11),
     },
   },
@@ -17,7 +17,7 @@ const useStyles = createStyles((theme) => ({
     [theme.fn.smallerThan('xs')]: {
       fontSize: rem(9),
     },
-    [theme.fn.largerThan('lg')]: {
+    [theme.fn.largerThan('md')]: {
       fontSize: rem(9),
     },
   },

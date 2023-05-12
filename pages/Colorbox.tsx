@@ -102,9 +102,12 @@ export default function Colorbox({ numColors, rgRGB, rgHSL }: ColorboxProps) {
       <Text className={classes.centertext} weight={500} size="lg" mb="md">
         h_min:{rgHSL.h_min} h_max:{rgHSL.h_max} s_min:{rgHSL.s_min} s_max:{rgHSL.s_max} l_min:{rgHSL.l_min} l_max{rgHSL.l_max}
       </Text>
+      <Text className={classes.centertext} weight={500} size="lg" mb="md">
+        viewport: {width}, {height} ({width/16}, {height/16})
+      </Text>
       <Grid columns={24} justify="center" align="stretch">
         {colors.map((d, k) => (
-          <Grid.Col xs={6} lg={4} key={k}>
+          <Grid.Col xs={8} md={6} lg={4} key={k}>
             <Colorcard color={d}></Colorcard>
           </Grid.Col>))}
       </Grid>

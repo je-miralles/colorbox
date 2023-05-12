@@ -43,10 +43,11 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
+let didInit = false;
+
 export default function Colorbox({ numColors, rgRGB, rgHSL }: ColorboxProps) {
   const { classes } = useStyles();
   const [colors, setColors] = useState<ColorcardData[]>([]);
-  const [isLoaded, setLoaded] = useState<boolean>(false);
   const { height, width } = useViewportSize();
 
   const genColors = useCallback((num_colors: number, method: string="hsl") => {
@@ -80,18 +81,14 @@ export default function Colorbox({ numColors, rgRGB, rgHSL }: ColorboxProps) {
   }, [rgRGB, rgHSL]);
 
   useEffect(() => {
-    const setRandomColors = async () => {
-      try {
-        setColors([...genColors(numColors)]);
-        setLoaded(true);
-      } catch (error) {
-        console.log("error", error);
-      }
+    const setRandomColors = () => {
+      setColors([...genColors(numColors)]);
+      didInit = true;
     };
-    if (!isLoaded) setRandomColors();
-  }, [numColors, genColors, isLoaded]);
+    if (!didInit) setRandomColors();
+  }, [numColors, genColors]);
 
-  if (!isLoaded) return <Container><Text>Loading...</Text></Container>;
+  if (!didInit) return <Container><Text>Loading...</Text></Container>;
   else return(
     <Container>
       <Group className={classes.button} position="center">

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { rem, createStyles, Group, Container, Center, Grid, Text, Button } from '@mantine/core';
 import { useViewportSize } from '@mantine/hooks';
-import { color } from 'd3-color';
+import { rgb, hsl } from 'd3-color';
 import { randomNormal } from 'd3-random';
 
 import Colorcard, { ColorcardData } from './Colorcard';
@@ -69,20 +69,20 @@ const randomColorRGB = (colorKnobs: colorGen) => {
   const r = randVal(colorKnobs.rgb.r_min, colorKnobs.rgb.r_max);
   const g = randVal(colorKnobs.rgb.g_min, colorKnobs.rgb.g_max);
   const b = randVal(colorKnobs.rgb.b_min, colorKnobs.rgb.b_max);
-  const newcolor = color(`rgb(${r}, ${g}, ${b})`);
+  const newcolor = rgb(`rgb(${r}, ${g}, ${b})`);
   return ({
     string: `rgb(${r},${g},${b})`,
-    code: newcolor ? newcolor.formatHex() : "#888888",
+    code: newcolor ? newcolor.formatHex() : "#090909",
   });
 };
 const randomColorHSL = (colorKnobs: colorGen) => {
   const h = randVal(colorKnobs.hsl.h_min, colorKnobs.hsl.h_max);
   const s = randVal(colorKnobs.hsl.s_min, colorKnobs.hsl.s_max);
   const l = randVal(colorKnobs.hsl.l_min, colorKnobs.hsl.l_max);
-  const newcolor = color(`hsl(${h}, ${s}%, ${l}%)`);
+  const newcolor = hsl(`hsl(${h}, ${s}%, ${l}%)`);
   return ({
     string: `hsl(${h},${s}%,${l}%)`,
-    code: newcolor ? newcolor.formatHex() : "#888888",
+    code: newcolor ? newcolor.formatHex() : "#090909",
   });
 };
 

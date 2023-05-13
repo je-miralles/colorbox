@@ -151,6 +151,7 @@ export default function Colorbox({ numColors }: ColorboxProps) {
       <Group m="xs" position="center">
         <Button
           compact
+          radius="md"
           onClick={(event) => genColors()}
           styles={(theme) => ({
             root: {

@@ -175,6 +175,9 @@ const useStyles = createStyles((theme) => ({
     textAlign: 'center',
     color: theme.colorScheme === 'dark' ? theme.colors.gray[5] : theme.colors.black,
     fontSize: rem(12),
+    [theme.fn.smallerThan('xs')]: {
+      fontSize: rem(5),
+    },
     [theme.fn.smallerThan('sm')]: {
       fontSize: rem(7),
     },

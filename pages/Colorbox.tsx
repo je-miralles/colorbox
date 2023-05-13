@@ -85,6 +85,40 @@ const randomColorHSL = (colorKnobs: colorGen) => {
     code: newcolor ? newcolor.formatHex() : "#090909",
   });
 };
+const randNormValRGB = (baseColorcardData: ColorcardData, colorKnobs: colorGen) => {
+  const basecolor = rgb(baseColorcardData.code);
+  const r_mu = basecolor ? basecolor.r : 9;
+  const g_mu = basecolor ? basecolor.g : 9;
+  const b_mu = basecolor ? basecolor.b : 9;
+  const r_sigma = colorKnobs.s_rgb.r_sigma;
+  const g_sigma = colorKnobs.s_rgb.g_sigma;
+  const b_sigma = colorKnobs.s_rgb.b_sigma;
+  const r = randomNormal(r_mu, r_sigma);
+  const g = randomNormal(g_mu, g_sigma);
+  const b = randomNormal(b_mu, b_sigma);
+  const newcolor = rgb(`rgb(${r}, ${g}, ${b})`);
+  return ({
+    string: newcolor.formatRgb(),
+    code: newcolor ? newcolor.formatHex() : "#090909",
+  });
+};
+const randNormValHSL = (baseColorcardData: ColorcardData, colorKnobs: colorGen) => {
+  const basecolor = hsl(baseColorcardData.code);
+  const h_mu = basecolor ? basecolor.h : 9;
+  const s_mu = basecolor ? basecolor.s : 50;
+  const l_mu = basecolor ? basecolor.l : 50;
+  const h_sigma = colorKnobs.s_hsl.h_sigma;
+  const s_sigma = colorKnobs.s_hsl.s_sigma;
+  const l_sigma = colorKnobs.s_hsl.l_sigma;
+  const h = randomNormal(h_mu, h_sigma);
+  const s = randomNormal(s_mu, s_sigma);
+  const l = randomNormal(l_mu, l_sigma);
+  const newcolor = hsl(`hsl(${h}, ${s}%, ${l}%)`);
+  return ({
+    string: newcolor.formatHsl(),
+    code: newcolor ? newcolor.formatHex() : "#090909",
+  });
+};
 
 const getColorKnobs = () => {
   const method = Math.random() > 0.5 ? "hsl" : "rgb";

@@ -44,17 +44,6 @@ type ColorboxProps = {
   numColors: number;
 };
 
-const useStyles = createStyles((theme) => ({
-  centertext: {
-    textAlign: 'center',
-    color: theme.colorScheme === 'dark' ? theme.colors.gray[5] : theme.colors.black,
-    fontSize: rem(12),
-    [theme.fn.smallerThan('sm')]: {
-      fontSize: rem(8),
-    },
-  },
-}));
-
 const randVal = (min: number, max: number) => { return Math.abs(Math.floor(Math.random() * (max - min) + min)) };
 const genKnobsRGB = () => {
   return({
@@ -97,6 +86,18 @@ const randomColorHSL = (colorKnobs: colorGen) => {
   });
 };
 
+const getColorKnobs = () => {
+  const method = Math.random() > 0.5 ? "hsl" : "rgb";
+  const rgRGB = genKnobsRGB();
+  const rgHSL = genKnobsHSL();
+  return({
+    method: method,
+    rgb: rgRGB,
+    hsl: rgHSL,
+    s_rgb: defaultKnobs.s_rgb,
+    s_hsl: defaultKnobs.s_hsl,
+  });
+};
 const knobsDisplay = (colorKnobs: colorGen) => {
   return colorKnobs.method == "hsl" ? (
     <p>h.min {colorKnobs.hsl.h_min} h.max {colorKnobs.hsl.h_max} s.min {colorKnobs.hsl.s_min} s.max {colorKnobs.hsl.s_max} l.min {colorKnobs.hsl.l_min} l.max {colorKnobs.hsl.l_max}</p>
@@ -135,20 +136,18 @@ const defaultKnobs = {
   },
 };
 
-let didInit = false;
+const useStyles = createStyles((theme) => ({
+  centertext: {
+    textAlign: 'center',
+    color: theme.colorScheme === 'dark' ? theme.colors.gray[5] : theme.colors.black,
+    fontSize: rem(12),
+    [theme.fn.smallerThan('sm')]: {
+      fontSize: rem(8),
+    },
+  },
+}));
 
-const getColorKnobs = () => {
-  const method = Math.random() > 0.5 ? "hsl" : "rgb";
-  const rgRGB = genKnobsRGB();
-  const rgHSL = genKnobsHSL();
-  return({
-    method: method,
-    rgb: rgRGB,
-    hsl: rgHSL,
-    s_rgb: defaultKnobs.s_rgb,
-    s_hsl: defaultKnobs.s_hsl,
-  });
-};
+let didInit = false;
 
 export default function Colorbox({ numColors }: ColorboxProps) {
   const { classes } = useStyles();

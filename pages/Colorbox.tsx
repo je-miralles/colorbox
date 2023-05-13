@@ -189,7 +189,7 @@ export default function Colorbox({ numColors }: ColorboxProps) {
   const [colors, setColors] = useState<ColorcardData[]>([]);
   const [colorKnobs, setColorKnobs] = useState<colorGen>(defaultKnobs);
 
-  const genColors = useCallback(() => {
+  const initColors = useCallback(() => {
     let newColors;
     const newColorKnobs = getColorKnobs();
     if (newColorKnobs.method == "hsl") {
@@ -203,10 +203,10 @@ export default function Colorbox({ numColors }: ColorboxProps) {
 
   useEffect(() => {
     if (!didInit) {
-      genColors();
+      initColors();
       didInit = true;
     }
-  }, [genColors]);
+  }, [initColors]);
 
   if (!didInit) return <Center><Text>Loading...</Text></Center>;
   else return(
@@ -215,7 +215,7 @@ export default function Colorbox({ numColors }: ColorboxProps) {
         <Button
           compact
           radius="md"
-          onClick={(event) => genColors()}
+          onClick={(event) => initColors()}
           styles={(theme) => ({
             root: {
               backgroundColor: `${colors[Math.round(numColors/2)].code}`,

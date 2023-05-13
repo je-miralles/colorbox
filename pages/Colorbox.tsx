@@ -148,7 +148,7 @@ export default function Colorbox({ numColors }: ColorboxProps) {
   if (!didInit) return <Center><Text>Loading...</Text></Center>;
   else return(
     <Container>
-      <Group position="center">
+      <Group m="xs" position="center">
         <Button
           compact
           onClick={(event) => genColors()}
@@ -164,7 +164,7 @@ export default function Colorbox({ numColors }: ColorboxProps) {
           Randomize
         </Button>
       </Group>
-      <Grid m="xs" columns={24} justify="center" align="stretch">
+      <Grid gutterXs="xs" m="0" columns={24} justify="center" align="stretch">
         {colors.map((d, k) => (
           <Grid.Col xs={12} sm={8} md={6} lg={4} key={k}>
             <Colorcard color={d}></Colorcard>

@@ -189,6 +189,10 @@ const useStyles = createStyles((theme) => ({
 
 let didInit = false;
 
+const genColors = (num: number, colorKnobs: colorGen, randFunc: (colorKnobs: colorGen) => ColorcardData) => {
+  return Array.from({ length: num }, () => randFunc(colorKnobs));
+};
+
 export default function Colorbox({ numColors }: ColorboxProps) {
   const { classes } = useStyles();
   const { height, width } = useViewportSize();
@@ -196,13 +200,9 @@ export default function Colorbox({ numColors }: ColorboxProps) {
   const [colorKnobs, setColorKnobs] = useState<colorGen>(defaultKnobs);
 
   const initColors = useCallback(() => {
-    let newColors;
     const newColorKnobs = getColorKnobs();
-    if (newColorKnobs.method == "hsl") {
-      newColors = Array.from({ length: numColors }, () => randomColorHSL(newColorKnobs));
-    } else {
-      newColors = Array.from({ length: numColors }, () => randomColorRGB(newColorKnobs));
-    }
+    const newColors = newColorKnobs.method == "hsl" ? genColors(numColors, newColorKnobs, randomColorHSL) :
+                                                      genColors(numColors, newColorKnobs, randomColorRGB);
     setColorKnobs(newColorKnobs);
     setColors([...newColors]);
   }, [numColors]);
@@ -221,7 +221,7 @@ export default function Colorbox({ numColors }: ColorboxProps) {
         <Button
           compact
           radius="md"
-          onClick={(event) => initColors()}
+          onClick={initColors}
           styles={(theme) => ({
             root: {
               backgroundColor: `${colors[Math.round(numColors/2)].code}`,

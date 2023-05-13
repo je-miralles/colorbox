@@ -3,9 +3,9 @@ import { rem, createStyles, Card, Text } from '@mantine/core';
 const useStyles = createStyles((theme) => ({
   text_title: {
     color: theme.colorScheme === 'dark' ? theme.colors.gray[4] : theme.colors.black,
-    fontSize: rem(14),
+    fontSize: rem(12),
     [theme.fn.smallerThan('sm')]: {
-      fontSize: rem(11),
+      fontSize: rem(10),
     },
     [theme.fn.largerThan('md')]: {
       fontSize: rem(11),
@@ -13,7 +13,7 @@ const useStyles = createStyles((theme) => ({
   },
   text: {
     color: theme.colorScheme === 'dark' ? theme.colors.gray[3] : theme.colors.black,
-    fontSize: rem(12),
+    fontSize: rem(10),
     [theme.fn.smallerThan('sm')]: {
       fontSize: rem(8),
     },

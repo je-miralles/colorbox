@@ -166,7 +166,7 @@ export default function Colorbox({ numColors }: ColorboxProps) {
       </Group>
       <Grid m="xs" columns={24} justify="center" align="stretch">
         {colors.map((d, k) => (
-          <Grid.Col xs={8} md={6} lg={4} key={k}>
+          <Grid.Col xs={12} sm={8} md={6} lg={4} key={k}>
             <Colorcard color={d}></Colorcard>
           </Grid.Col>))}
       </Grid>

@@ -22,8 +22,8 @@ export default function App(props: AppProps) {
         theme={{
           colorScheme: "light",
           breakpoints: {
-            xs: '1em',  // This keeps grid from going to single column at small window size?
-            sm: '29em',
+            xs: '16em',
+            sm: '27em',
             md: '40em',
             lg: '60em',
             xl: '88em',

@@ -20,25 +20,24 @@ export default function App(props: AppProps) {
         withGlobalStyles
         withNormalizeCSS
         theme={{
-          /** Put your mantine theme override here */
           colorScheme: "light",
           breakpoints: {
             xs: '1em',  // This keeps grid from going to single column at small window size?
-            sm: '29em', // ~ 528px
-            md: '40em', // ~ 1042px
-            lg: '60em', // ~ 1120px
+            sm: '29em',
+            md: '40em',
+            lg: '60em',
             xl: '88em',
           },
           colors: {
             dark: [
-              '#C1C2C5', // dark colorScheme text color
+              '#C1C2C5', // dark colorScheme default text color
               '#A6A7AB',
               '#909296',
               '#5c5f66',
               '#373A40',
               '#2C2E33',
-              '#25262b', // dark colorScheme card color
-              '#1A1B1E', // dark colorScheme body background color
+              '#25262b', // dark colorScheme default card color
+              '#1A1B1E', // dark colorScheme default body background color
               '#141517',
               '#101113',
             ],

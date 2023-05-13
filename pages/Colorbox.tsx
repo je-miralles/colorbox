@@ -119,8 +119,10 @@ const randNormValHSL = (baseColorcardData: ColorcardData, colorKnobs: colorGen) 
     code: newcolor ? newcolor.formatHex() : "#090909",
   });
 };
-
-const getColorKnobs = () => {
+const genColors = (num: number, colorKnobs: colorGen, randFunc: (colorKnobs: colorGen) => ColorcardData) => {
+  return Array.from({ length: num }, () => randFunc(colorKnobs));
+};
+const getColorKnobs = (s_rgRGB: randomRGBSigma=defaultKnobs.s_rgb, s_rgHSL: randomHSLSigma=defaultKnobs.s_hsl) => {
   const method = Math.random() > 0.5 ? "hsl" : "rgb";
   const rgRGB = genKnobsRGB();
   const rgHSL = genKnobsHSL();
@@ -128,8 +130,8 @@ const getColorKnobs = () => {
     method: method,
     rgb: rgRGB,
     hsl: rgHSL,
-    s_rgb: defaultKnobs.s_rgb,
-    s_hsl: defaultKnobs.s_hsl,
+    s_rgb: s_rgRGB,
+    s_hsl: s_rgHSL,
   });
 };
 const knobsDisplay = (colorKnobs: colorGen) => {
@@ -188,10 +190,6 @@ const useStyles = createStyles((theme) => ({
 }));
 
 let didInit = false;
-
-const genColors = (num: number, colorKnobs: colorGen, randFunc: (colorKnobs: colorGen) => ColorcardData) => {
-  return Array.from({ length: num }, () => randFunc(colorKnobs));
-};
 
 export default function Colorbox({ numColors }: ColorboxProps) {
   const { classes } = useStyles();

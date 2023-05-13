@@ -36,7 +36,7 @@ const useStyles = createStyles((theme) => ({
     color: theme.colorScheme === 'dark' ? theme.colors.gray[5] : theme.colors.black,
     fontSize: rem(12),
     [theme.fn.smallerThan('sm')]: {
-      fontSize: rem(10),
+      fontSize: rem(9),
     },
   },
 }));

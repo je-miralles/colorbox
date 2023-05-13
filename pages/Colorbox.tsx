@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { rem, createStyles, Group, Container, Center, Grid, Text, Button } from '@mantine/core';
 import { useViewportSize } from '@mantine/hooks';
 import { color } from 'd3-color';
+import { randomNormal } from 'd3-random';
 
 import Colorcard, { ColorcardData } from './Colorcard';
 
@@ -21,10 +22,23 @@ type randomHSLgen = {
   l_min: number;
   l_max: number;
 };
+type randomRGBSigma = {
+  r_sigma: number;
+  g_sigma: number;
+  b_sigma: number;
+};
+type randomHSLSigma = {
+  h_sigma: number;
+  s_sigma: number;
+  l_sigma: number;
+};
+
 type colorGen = {
   method: string;
   rgb: randomRGBgen;
   hsl: randomHSLgen;
+  s_rgb: randomRGBSigma;
+  s_hsl: randomHSLSigma;
 };
 type ColorboxProps = {
   numColors: number;
@@ -109,9 +123,32 @@ const defaultKnobs = {
     l_min: 25,
     l_max: 39,
   },
+  s_rgb: {
+    r_sigma: 255,
+    g_sigma: 255,
+    b_sigma: 255,
+  },
+  s_hsl: {
+    h_sigma: 360,
+    s_sigma: 100,
+    l_sigma: 100,
+  },
 };
 
 let didInit = false;
+
+const getColorKnobs = () => {
+  const method = Math.random() > 0.5 ? "hsl" : "rgb";
+  const rgRGB = genKnobsRGB();
+  const rgHSL = genKnobsHSL();
+  return({
+    method: method,
+    rgb: rgRGB,
+    hsl: rgHSL,
+    s_rgb: defaultKnobs.s_rgb,
+    s_hsl: defaultKnobs.s_hsl,
+  });
+};
 
 export default function Colorbox({ numColors }: ColorboxProps) {
   const { classes } = useStyles();
@@ -121,15 +158,8 @@ export default function Colorbox({ numColors }: ColorboxProps) {
 
   const genColors = useCallback(() => {
     let newColors;
-    const method = Math.random() > 0.5 ? "hsl" : "rgb";
-    const rgRGB = genKnobsRGB();
-    const rgHSL = genKnobsHSL();
-    const newColorKnobs = {
-      method: method,
-      rgb: rgRGB,
-      hsl: rgHSL,
-    };
-    if (method == "hsl") {
+    const newColorKnobs = getColorKnobs();
+    if (newColorKnobs.method == "hsl") {
       newColors = Array.from({ length: numColors }, () => randomColorHSL(newColorKnobs));
     } else {
       newColors = Array.from({ length: numColors }, () => randomColorRGB(newColorKnobs));

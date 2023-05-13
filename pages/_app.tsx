@@ -23,7 +23,7 @@ export default function App(props: AppProps) {
           colorScheme: "light",
           breakpoints: {
             xs: '16em',
-            sm: '30em',
+            sm: '25em',
             md: '40em',
             lg: '60em',
             xl: '88em',

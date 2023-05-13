@@ -1,4 +1,5 @@
-import { rem, createStyles, Card, Text } from '@mantine/core';
+import { useCallback } from 'react';
+import { rem, createStyles, Card, Text, Button } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
   text_title: {
@@ -36,14 +37,21 @@ export type ColorcardData = {
 
 type ColorcardProps = {
   color: ColorcardData;
+  clickColors: (color: ColorcardData) => void;
 };
 
-export default function Colorcard({ color }: ColorcardProps) {
+export default function Colorcard({ color, clickColors }: ColorcardProps) {
   const { classes } = useStyles();
+  const handleClickColors = useCallback(() => {
+    clickColors(color)
+  }, [color, clickColors])
   return(
     <Card
       p="xs"
       radius="md"
+      component="a"
+      href="#"
+      onClick={handleClickColors}
       sx={{ backgroundColor: `${color.code}` }}
     >
       <Text className={classes.text_title} weight={500} size="lg" mb="md">

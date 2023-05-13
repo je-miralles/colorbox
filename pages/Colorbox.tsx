@@ -23,11 +23,17 @@ type randomHSLgen = {
   l_max: number;
 };
 type randomRGBSigma = {
+  r_mu: number;
+  g_mu: number;
+  b_mu: number;
   r_sigma: number;
   g_sigma: number;
   b_sigma: number;
 };
 type randomHSLSigma = {
+  h_mu: number;
+  s_mu: number;
+  l_mu: number;
   h_sigma: number;
   s_sigma: number;
   l_sigma: number;
@@ -85,34 +91,20 @@ const randomColorHSL = (colorKnobs: colorGen) => {
     code: newcolor ? newcolor.formatHex() : "#090909",
   });
 };
-const randNormValRGB = (baseColorcardData: ColorcardData, colorKnobs: colorGen) => {
-  const basecolor = rgb(baseColorcardData.code);
-  const r_mu = basecolor ? basecolor.r : 9;
-  const g_mu = basecolor ? basecolor.g : 9;
-  const b_mu = basecolor ? basecolor.b : 9;
-  const r_sigma = colorKnobs.s_rgb.r_sigma;
-  const g_sigma = colorKnobs.s_rgb.g_sigma;
-  const b_sigma = colorKnobs.s_rgb.b_sigma;
-  const r = randomNormal(r_mu, r_sigma);
-  const g = randomNormal(g_mu, g_sigma);
-  const b = randomNormal(b_mu, b_sigma);
+const randNormValRGB = (colorKnobs: colorGen) => {
+  const r = randomNormal(colorKnobs.s_rgb.r_mu, colorKnobs.s_rgb.r_sigma);
+  const g = randomNormal(colorKnobs.s_rgb.g_mu, colorKnobs.s_rgb.g_sigma);
+  const b = randomNormal(colorKnobs.s_rgb.b_mu, colorKnobs.s_rgb.b_sigma);
   const newcolor = rgb(`rgb(${r}, ${g}, ${b})`);
   return ({
     string: newcolor.formatRgb(),
     code: newcolor ? newcolor.formatHex() : "#090909",
   });
 };
-const randNormValHSL = (baseColorcardData: ColorcardData, colorKnobs: colorGen) => {
-  const basecolor = hsl(baseColorcardData.code);
-  const h_mu = basecolor ? basecolor.h : 9;
-  const s_mu = basecolor ? basecolor.s : 50;
-  const l_mu = basecolor ? basecolor.l : 50;
-  const h_sigma = colorKnobs.s_hsl.h_sigma;
-  const s_sigma = colorKnobs.s_hsl.s_sigma;
-  const l_sigma = colorKnobs.s_hsl.l_sigma;
-  const h = randomNormal(h_mu, h_sigma);
-  const s = randomNormal(s_mu, s_sigma);
-  const l = randomNormal(l_mu, l_sigma);
+const randNormValHSL = (colorKnobs: colorGen) => {
+  const h = randomNormal(colorKnobs.s_hsl.h_mu, colorKnobs.s_hsl.h_sigma);
+  const s = randomNormal(colorKnobs.s_hsl.s_mu, colorKnobs.s_hsl.s_sigma);
+  const l = randomNormal(colorKnobs.s_hsl.l_mu, colorKnobs.s_hsl.l_sigma);
   const newcolor = hsl(`hsl(${h}, ${s}%, ${l}%)`);
   return ({
     string: newcolor.formatHsl(),
@@ -122,7 +114,7 @@ const randNormValHSL = (baseColorcardData: ColorcardData, colorKnobs: colorGen) 
 const genColors = (num: number, colorKnobs: colorGen, randFunc: (colorKnobs: colorGen) => ColorcardData) => {
   return Array.from({ length: num }, () => randFunc(colorKnobs));
 };
-const getColorKnobs = (s_rgRGB: randomRGBSigma=defaultKnobs.s_rgb, s_rgHSL: randomHSLSigma=defaultKnobs.s_hsl) => {
+const genColorKnobs = (s_rgRGB: randomRGBSigma=defaultKnobs.s_rgb, s_rgHSL: randomHSLSigma=defaultKnobs.s_hsl) => {
   const method = Math.random() > 0.5 ? "hsl" : "rgb";
   const rgRGB = genKnobsRGB();
   const rgHSL = genKnobsHSL();
@@ -161,11 +153,17 @@ const defaultKnobs = {
     l_max: 39,
   },
   s_rgb: {
+    r_mu: 127,
+    g_mu: 127,
+    b_mu: 127,
     r_sigma: 255,
     g_sigma: 255,
     b_sigma: 255,
   },
   s_hsl: {
+    h_mu: 180,
+    s_mu: 50,
+    l_mu: 50,
     h_sigma: 360,
     s_sigma: 100,
     l_sigma: 100,
@@ -198,12 +196,38 @@ export default function Colorbox({ numColors }: ColorboxProps) {
   const [colorKnobs, setColorKnobs] = useState<colorGen>(defaultKnobs);
 
   const initColors = useCallback(() => {
-    const newColorKnobs = getColorKnobs();
+    const newColorKnobs = genColorKnobs();
     const newColors = newColorKnobs.method == "hsl" ? genColors(numColors, newColorKnobs, randomColorHSL) :
                                                       genColors(numColors, newColorKnobs, randomColorRGB);
     setColorKnobs(newColorKnobs);
     setColors([...newColors]);
   }, [numColors]);
+
+  const clickColors = useCallback((color: ColorcardData) => {
+    const color_rgb = rgb(color.code);
+    const color_hsl = hsl(color.code);
+    const new_s_rgb = {
+      r_mu: color_rgb.r,
+      g_mu: color_rgb.g,
+      b_mu: color_rgb.b,
+      r_sigma: colorKnobs.s_rgb.r_sigma/2,
+      g_sigma: colorKnobs.s_rgb.g_sigma/2,
+      b_sigma: colorKnobs.s_rgb.b_sigma/2,
+    };
+    const new_s_hsl = {
+      h_mu: color_hsl.h,
+      s_mu: color_hsl.s,
+      l_mu: color_hsl.l,
+      h_sigma: colorKnobs.s_hsl.h_sigma/2,
+      s_sigma: colorKnobs.s_hsl.s_sigma/2,
+      l_sigma: colorKnobs.s_hsl.l_sigma/2,
+    };
+    const newColorKnobs = genColorKnobs(new_s_rgb, new_s_hsl);
+    const newColors = newColorKnobs.method == "hsl" ? genColors(numColors, colorKnobs, randNormValHSL) :
+                                                      genColors(numColors, colorKnobs, randNormValRGB);
+    setColorKnobs(newColorKnobs);
+    setColors([...newColors]);
+  }, [numColors, colorKnobs]);
 
   useEffect(() => {
     if (!didInit) {
@@ -235,11 +259,14 @@ export default function Colorbox({ numColors }: ColorboxProps) {
       <Grid gutterXs="xs" m="0" columns={24} justify="center" align="stretch">
         {colors.map((d, k) => (
           <Grid.Col xs={12} sm={8} md={6} lg={4} key={k}>
-            <Colorcard color={d}></Colorcard>
+            <Colorcard color={d} clickColors={clickColors}></Colorcard>
           </Grid.Col>))}
       </Grid>
       <Text className={classes.centertext} lh={rem(3)} weight={500} size="lg" mb="md">
         {knobsDisplay(colorKnobs)}
+      </Text>
+      <Text className={classes.centertext} lh={rem(3)} weight={500} size="lg" mb="md">
+        <p>viewport: {width}, {height} ({width/16}, {height/16})</p>
       </Text>
     </Container>
   );

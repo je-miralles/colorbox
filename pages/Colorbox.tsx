@@ -52,10 +52,10 @@ type ColorboxProps = {
 
 const clamph = (max: number, value: number) => { return value >= 0 ? value%max : value%max + max }
 const clamp = (min: number, max: number, value: number) => { return Math.max(min, Math.min(max, value)) }
+const shrinkSigma = (min: number, sigmaScale: number, sigma: number) => { return sigma/sigmaScale > min ? sigma/sigmaScale : min }
 const randNormVal = (min: number, max: number, mu: number, sigma: number) => { return Math.floor(clamph(max, randomNormal(mu, sigma)())) }
 const randNormValh = (max: number, mu: number, sigma: number) => { return Math.floor(clamph(max, randomNormal(mu, sigma)())) }
 const randVal = (min: number, max: number) => { return Math.floor(Math.abs(Math.random() * (max - min) + min)) }
-const shrinkSigma = (min, sigmaScale, sigma) => { return sigma/sigmaScale > min ? sigma/sigmaScale : min }
 const genKnobsRGB = () => {
   return({
     r_min: randVal(0, 255),
@@ -218,7 +218,7 @@ export default function Colorbox({ numColors }: ColorboxProps) {
 
   const clickColors = useCallback((color: ColorcardData) => {
     const minSigma = 15;
-    const sigmaScale = 4;
+    const sigmaScale = 2;
     let color_rgb;
     let color_hsl;
     if (color.string.slice(0,3) == "hsl") {
@@ -229,17 +229,17 @@ export default function Colorbox({ numColors }: ColorboxProps) {
       color_hsl = hsl(color_rgb);
     }
     const new_s_hsl = {
-      h_mu: color_hsl.h,
-      s_mu: color_hsl.s,
-      l_mu: color_hsl.l,
+      h_mu: (color_hsl.h + colorKnobs.s_hsl.h_mu)/2,
+      s_mu: (color_hsl.s + colorKnobs.s_hsl.s_mu)/2,
+      l_mu: (color_hsl.l + colorKnobs.s_hsl.l_mu)/2,
       h_sigma: shrinkSigma(minSigma, sigmaScale, colorKnobs.s_hsl.h_sigma),
       s_sigma: shrinkSigma(minSigma, sigmaScale, colorKnobs.s_hsl.s_sigma),
       l_sigma: shrinkSigma(minSigma, sigmaScale, colorKnobs.s_hsl.l_sigma),
     };
     const new_s_rgb = {
-      r_mu: color_rgb.r,
-      g_mu: color_rgb.g,
-      b_mu: color_rgb.b,
+      r_mu: (color_rgb.r + colorKnobs.s_rgb.r_mu)/2,
+      g_mu: (color_rgb.g + colorKnobs.s_rgb.g_mu)/2,
+      b_mu: (color_rgb.b + colorKnobs.s_rgb.b_mu)/2,
       r_sigma: shrinkSigma(minSigma, sigmaScale, colorKnobs.s_rgb.r_sigma),
       g_sigma: shrinkSigma(minSigma, sigmaScale, colorKnobs.s_rgb.g_sigma),
       b_sigma: shrinkSigma(minSigma, sigmaScale, colorKnobs.s_rgb.b_sigma),

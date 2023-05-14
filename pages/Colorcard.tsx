@@ -42,9 +42,7 @@ type ColorcardProps = {
 
 export default function Colorcard({ color, clickColors }: ColorcardProps) {
   const { classes } = useStyles();
-  const handleClickColors = useCallback(() => {
-    clickColors(color)
-  }, [color, clickColors])
+  const handleClickColors = useCallback(() => { clickColors(color) }, [color, clickColors])
   return(
     <Card
       p="xs"

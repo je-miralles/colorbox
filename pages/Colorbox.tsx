@@ -50,7 +50,11 @@ type ColorboxProps = {
   numColors: number;
 };
 
-const randVal = (min: number, max: number) => { return Math.abs(Math.floor(Math.random() * (max - min) + min)) };
+const clamph = (max: number, value: number) => { return value >= 0 ? Math.abs(value%360) : value + 360 }
+const clamp = (min: number, max: number, value: number) => { return Math.max(min, Math.min(max, value)) }
+const randNormVal = (min: number, max: number, mu: number, sigma: number) => { return clamp(min, max, Math.floor(max*randomNormal(mu, sigma)())) }
+const randNormValh = (max: number, mu: number, sigma: number) => { return clamph(max, Math.floor(max*randomNormal(mu, sigma)())) }
+const randVal = (min: number, max: number) => { return Math.abs(Math.floor(Math.random() * (max - min) + min)) }
 const genKnobsRGB = () => {
   return({
     r_min: randVal(0, 255),
@@ -92,9 +96,9 @@ const randomColorHSL = (colorKnobs: colorGen) => {
   });
 };
 const randNormValRGB = (colorKnobs: colorGen) => {
-  const r = randomNormal(colorKnobs.s_rgb.r_mu, colorKnobs.s_rgb.r_sigma);
-  const g = randomNormal(colorKnobs.s_rgb.g_mu, colorKnobs.s_rgb.g_sigma);
-  const b = randomNormal(colorKnobs.s_rgb.b_mu, colorKnobs.s_rgb.b_sigma);
+  const r = randNormVal(0, 255, colorKnobs.s_rgb.r_mu, colorKnobs.s_rgb.r_sigma);
+  const g = randNormVal(0, 255, colorKnobs.s_rgb.g_mu, colorKnobs.s_rgb.g_sigma);
+  const b = randNormVal(0, 255, colorKnobs.s_rgb.b_mu, colorKnobs.s_rgb.b_sigma);
   const newcolor = rgb(`rgb(${r}, ${g}, ${b})`);
   return ({
     string: newcolor.formatRgb(),
@@ -102,9 +106,9 @@ const randNormValRGB = (colorKnobs: colorGen) => {
   });
 };
 const randNormValHSL = (colorKnobs: colorGen) => {
-  const h = randomNormal(colorKnobs.s_hsl.h_mu, colorKnobs.s_hsl.h_sigma);
-  const s = randomNormal(colorKnobs.s_hsl.s_mu, colorKnobs.s_hsl.s_sigma);
-  const l = randomNormal(colorKnobs.s_hsl.l_mu, colorKnobs.s_hsl.l_sigma);
+  const h = randNormValh(360, colorKnobs.s_hsl.h_mu, colorKnobs.s_hsl.h_sigma);
+  const s = randNormVal(0, 100, colorKnobs.s_hsl.s_mu, colorKnobs.s_hsl.s_sigma);
+  const l = randNormVal(0, 100, colorKnobs.s_hsl.l_mu, colorKnobs.s_hsl.l_sigma);
   const newcolor = hsl(`hsl(${h}, ${s}%, ${l}%)`);
   return ({
     string: newcolor.formatHsl(),

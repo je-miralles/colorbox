@@ -47,15 +47,18 @@ export default function Colorcard({ color, clickColors }: ColorcardProps) {
     <Card
       p="xs"
       radius="md"
-      component="a"
-      href="#"
-      onClick={handleClickColors}
       sx={{ backgroundColor: `${color.code}` }}
     >
       <Text className={classes.text_title} weight={500} size="lg" mb="md">
         {color.code}
       </Text>
-      <Text className={classes.text} lineClamp={10}>
+      <Text
+        className={classes.text}
+        lineClamp={10}
+        component="a"
+        href="#"
+        onClick={handleClickColors}
+      >
         {color.string}
       </Text>
     </Card>

@@ -50,11 +50,11 @@ type ColorboxProps = {
   numColors: number;
 };
 
-const clamph = (max: number, value: number) => { return value >= 0 ? value%360 : value%360 + 360 }
+const clamph = (max: number, value: number) => { return value >= 0 ? value%max : value%max + max }
 const clamp = (min: number, max: number, value: number) => { return Math.max(min, Math.min(max, value)) }
-const randNormVal = (min: number, max: number, mu: number, sigma: number) => { return clamp(min, max, Math.floor(max*randomNormal(mu, sigma)())) }
-const randNormValh = (max: number, mu: number, sigma: number) => { return Math.floor(clamph(max, max*randomNormal(mu, sigma)())) }
-const randVal = (min: number, max: number) => { return Math.abs(Math.floor(Math.random() * (max - min) + min)) }
+const randNormVal = (min: number, max: number, mu: number, sigma: number) => { return Math.floor(clamph(max, randomNormal(mu, sigma)())) }
+const randNormValh = (max: number, mu: number, sigma: number) => { return Math.floor(clamph(max, randomNormal(mu, sigma)())) }
+const randVal = (min: number, max: number) => { return Math.floor(Math.abs(Math.random() * (max - min) + min)) }
 const genKnobsRGB = () => {
   return({
     r_min: randVal(0, 255),
@@ -101,7 +101,7 @@ const randNormValRGB = (colorKnobs: colorGen) => {
   const b = randNormVal(0, 255, colorKnobs.s_rgb.b_mu, colorKnobs.s_rgb.b_sigma);
   const newcolor = rgb(`rgb(${r}, ${g}, ${b})`);
   return ({
-    string: newcolor.formatRgb(),
+    string: `rgb(${r}, ${g}, ${b})`,
     code: newcolor ? newcolor.formatHex() : "#090909",
   });
 };
@@ -111,7 +111,7 @@ const randNormValHSL = (colorKnobs: colorGen) => {
   const l = randNormVal(0, 100, colorKnobs.s_hsl.l_mu, colorKnobs.s_hsl.l_sigma);
   const newcolor = hsl(`hsl(${h}, ${s}%, ${l}%)`);
   return ({
-    string: newcolor.formatHsl(),
+    string: `hsl(${h}, ${s}%, ${l}%)`,
     code: newcolor ? newcolor.formatHex() : "#090909",
   });
 };

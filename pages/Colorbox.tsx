@@ -55,6 +55,7 @@ const clamp = (min: number, max: number, value: number) => { return Math.max(min
 const randNormVal = (min: number, max: number, mu: number, sigma: number) => { return Math.floor(clamph(max, randomNormal(mu, sigma)())) }
 const randNormValh = (max: number, mu: number, sigma: number) => { return Math.floor(clamph(max, randomNormal(mu, sigma)())) }
 const randVal = (min: number, max: number) => { return Math.floor(Math.abs(Math.random() * (max - min) + min)) }
+const shrinkSigma = (min, sigmaScale, sigma) => { return sigma/sigmaScale > min ? sigma/sigmaScale : min }
 const genKnobsRGB = () => {
   return({
     r_min: randVal(0, 255),
@@ -216,6 +217,8 @@ export default function Colorbox({ numColors }: ColorboxProps) {
   }, [numColors]);
 
   const clickColors = useCallback((color: ColorcardData) => {
+    const minSigma = 15;
+    const sigmaScale = 4;
     let color_rgb;
     let color_hsl;
     if (color.string.slice(0,3) == "hsl") {
@@ -229,17 +232,17 @@ export default function Colorbox({ numColors }: ColorboxProps) {
       h_mu: color_hsl.h,
       s_mu: color_hsl.s,
       l_mu: color_hsl.l,
-      h_sigma: colorKnobs.s_hsl.h_sigma,
-      s_sigma: colorKnobs.s_hsl.s_sigma,
-      l_sigma: colorKnobs.s_hsl.l_sigma,
+      h_sigma: shrinkSigma(minSigma, sigmaScale, colorKnobs.s_hsl.h_sigma),
+      s_sigma: shrinkSigma(minSigma, sigmaScale, colorKnobs.s_hsl.s_sigma),
+      l_sigma: shrinkSigma(minSigma, sigmaScale, colorKnobs.s_hsl.l_sigma),
     };
     const new_s_rgb = {
       r_mu: color_rgb.r,
       g_mu: color_rgb.g,
       b_mu: color_rgb.b,
-      r_sigma: colorKnobs.s_rgb.r_sigma,
-      g_sigma: colorKnobs.s_rgb.g_sigma,
-      b_sigma: colorKnobs.s_rgb.b_sigma,
+      r_sigma: shrinkSigma(minSigma, sigmaScale, colorKnobs.s_rgb.r_sigma),
+      g_sigma: shrinkSigma(minSigma, sigmaScale, colorKnobs.s_rgb.g_sigma),
+      b_sigma: shrinkSigma(minSigma, sigmaScale, colorKnobs.s_rgb.b_sigma),
     };
 
     const newColorKnobs = genColorKnobs(new_s_rgb, new_s_hsl);

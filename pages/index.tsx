@@ -34,7 +34,7 @@ export default function IndexPage() {
     <main>
       <Container className={classes.wrapper} size={1400}>
         <Title className={classes.title}>
-          Colorbox
+          colorbox
         </Title>
       </Container>
       <Colorbox />

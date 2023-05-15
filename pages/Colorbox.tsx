@@ -128,8 +128,8 @@ const randNormValHSL = (colorKnobs: colorGen) => {
 const genColors = (num: number, colorKnobs: colorGen, randFunc: (colorKnobs: colorGen) => ColorcardData) => {
   return Array.from({ length: num }, () => randFunc(colorKnobs));
 };
-const genColorKnobs = (s_rgRGB: randomRGBSigma=defaultKnobs.s_rgb, s_rgHSL: randomHSLSigma=defaultKnobs.s_hsl) => {
-  const method = Math.random() > 0.5 ? "hsl" : "rgb";
+const genColorKnobs = (cardType: string="random", s_rgRGB: randomRGBSigma=defaultKnobs.s_rgb, s_rgHSL: randomHSLSigma=defaultKnobs.s_hsl) => {
+  const method = cardType == "random" ? ( Math.random() > 0.5 ? "hsl" : "rgb" ) : cardType;
   const rgRGB = genKnobsRGB();
   const rgHSL = genKnobsHSL();
   return({
@@ -226,12 +226,13 @@ export default function Colorbox({ numColors }: ColorboxProps) {
   }, [numColors]);
 
   const clickColors = useCallback((color: ColorcardData) => {
+    const cardType = color.string.slice(0,3);
     const minSigma = 15;
     const minSigmaL = 30;
     const sigmaScale = 2;
     let color_rgb;
     let color_hsl;
-    if (color.string.slice(0,3) == "hsl") {
+    if (cardType == "hsl") {
       color_hsl = hsl(color.string);
       color_rgb = rgb(color_hsl);
     } else {
@@ -255,7 +256,7 @@ export default function Colorbox({ numColors }: ColorboxProps) {
       b_sigma: shrinkSigma(minSigma, sigmaScale*(1 + color_rgb.b/255), colorKnobs.s_rgb.b_sigma),
     };
 
-    const newColorKnobs = genColorKnobs(new_s_rgb, new_s_hsl);
+    const newColorKnobs = genColorKnobs(cardType, new_s_rgb, new_s_hsl);
     const newColors = newColorKnobs.method == "hsl" ? genColors(numColors, colorKnobs, randNormValHSL) :
                                                       genColors(numColors, colorKnobs, randNormValRGB);
     setColorKnobs(newColorKnobs);

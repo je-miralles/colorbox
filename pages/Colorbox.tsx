@@ -238,17 +238,17 @@ export default function Colorbox({ numColors }: ColorboxProps) {
       color_hsl = hsl(color_rgb);
     }
     const new_s_hsl = {
-      h_mu: (color_hsl.h + colorKnobs.s_hsl.h_mu)/2,
-      s_mu: (color_hsl.s + colorKnobs.s_hsl.s_mu)/2,
-      l_mu: (color_hsl.l + colorKnobs.s_hsl.l_mu)/2,
+      h_mu: color_hsl.h ? (color_hsl.h + colorKnobs.s_hsl.h_mu)/2 : colorKnobs.s_hsl.h_mu,
+      s_mu: color_hsl.s ? (color_hsl.s + colorKnobs.s_hsl.s_mu)/2 : colorKnobs.s_hsl.s_mu,
+      l_mu: color_hsl.l ? (color_hsl.l + colorKnobs.s_hsl.l_mu)/2 : colorKnobs.s_hsl.l_mu,
       h_sigma: shrinkSigma(minSigma, sigmaScale, colorKnobs.s_hsl.h_sigma),
       s_sigma: shrinkSigma(minSigma, sigmaScale, colorKnobs.s_hsl.s_sigma),
       l_sigma: shrinkSigma(minSigma, sigmaScale, colorKnobs.s_hsl.l_sigma),
     };
     const new_s_rgb = {
-      r_mu: (color_rgb.r + colorKnobs.s_rgb.r_mu)/2,
-      g_mu: (color_rgb.g + colorKnobs.s_rgb.g_mu)/2,
-      b_mu: (color_rgb.b + colorKnobs.s_rgb.b_mu)/2,
+      r_mu: color_rgb.r ? (color_rgb.r + colorKnobs.s_rgb.r_mu)/2 : colorKnobs.s_rgb.r_mu,
+      g_mu: color_rgb.g ? (color_rgb.g + colorKnobs.s_rgb.g_mu)/2 : colorKnobs.s_rgb.g_mu,
+      b_mu: color_rgb.b ? (color_rgb.b + colorKnobs.s_rgb.b_mu)/2 : colorKnobs.s_rgb.b_mu,
       r_sigma: shrinkSigma(minSigma, sigmaScale, colorKnobs.s_rgb.r_sigma),
       g_sigma: shrinkSigma(minSigma, sigmaScale, colorKnobs.s_rgb.g_sigma),
       b_sigma: shrinkSigma(minSigma, sigmaScale, colorKnobs.s_rgb.b_sigma),

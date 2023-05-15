@@ -228,7 +228,9 @@ export default function Colorbox({ numColors }: ColorboxProps) {
   const clickColors = useCallback((color: ColorcardData) => {
     const cardType = color.string.slice(0,3);
     const minSigma = 15;
-    const minSigmaL = 30;
+    const minSigmaH = 50;
+    const minSigmaS = 45;
+    const minSigmaL = 45;
     const sigmaScale = 2;
     let color_rgb;
     let color_hsl;
@@ -243,8 +245,8 @@ export default function Colorbox({ numColors }: ColorboxProps) {
       h_mu: color_hsl.h ? (color_hsl.h + colorKnobs.s_hsl.h_mu)/2 : colorKnobs.s_hsl.h_mu,
       s_mu: color_hsl.s ? (color_hsl.s + colorKnobs.s_hsl.s_mu)/2 : colorKnobs.s_hsl.s_mu,
       l_mu: color_hsl.l ? (color_hsl.l + colorKnobs.s_hsl.l_mu)/2 : colorKnobs.s_hsl.l_mu,
-      h_sigma: shrinkSigma(minSigma, sigmaScale, colorKnobs.s_hsl.h_sigma),
-      s_sigma: shrinkSigma(minSigma, sigmaScale, colorKnobs.s_hsl.s_sigma),
+      h_sigma: shrinkSigma(minSigmaH, sigmaScale, colorKnobs.s_hsl.h_sigma),
+      s_sigma: shrinkSigma(minSigmaS, sigmaScale, colorKnobs.s_hsl.s_sigma),
       l_sigma: shrinkSigma(minSigmaL, sigmaScale, colorKnobs.s_hsl.l_sigma),
     };
     const new_s_rgb = {

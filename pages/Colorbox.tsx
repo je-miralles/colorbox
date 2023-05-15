@@ -144,7 +144,7 @@ const knobsDisplay = (colorKnobs: colorGen, height: number, width: number) => {
       <p>r.mu {colorKnobs.s_rgb.r_mu} r.sigma {colorKnobs.s_rgb.r_sigma} g.mu {colorKnobs.s_rgb.g_mu} g.sigma {colorKnobs.s_rgb.g_sigma} b.mu {colorKnobs.s_rgb.b_mu} b.sigma {colorKnobs.s_rgb.b_sigma}</p>
       <p>viewport: {width}, {height} ({width/16}, {height/16})</p>
     </>
-  )
+  );
 };
 
 const defaultKnobs = {
@@ -285,9 +285,11 @@ export default function Colorbox({ numColors }: ColorboxProps) {
             <Colorcard color={d} clickColors={clickColors}></Colorcard>
           </Grid.Col>))}
       </Grid>
-      <Text className={classes.centertext} lh={rem(3)} weight={500} size="lg" mb="md">
-        {knobsDisplay(colorKnobs, height, width)}
-      </Text>
+      {process.env.NODE_ENV == "development" ? (
+        <Text className={classes.centertext} lh={rem(3)} weight={500} size="lg" mb="md">
+          {knobsDisplay(colorKnobs, height, width)}
+        </Text>
+      ) : ( null )}
     </Container>
   );
 }

@@ -58,6 +58,7 @@ export default function Colorcard({ color, clickColors }: ColorcardProps) {
         component="a"
         href="#"
         onClick={handleClickColors}
+        sx={{ color: `${color.code}` }}
       >
         {color.string}
       </Text>

@@ -52,8 +52,17 @@ type ColorboxProps = {
 
 const clamph = (max: number, value: number) => { return value >= 0 ? value%max : value%max + max }
 const clamp = (min: number, max: number, value: number) => { return Math.max(min, Math.min(max, value)) }
+const clampr = (min: number, max: number, value: number) => {
+  if (value > max) {
+    return 2*max - value;
+  } else if (value < min) {
+    return 2*min - value;
+  } else {
+    return value;
+  }
+};
 const shrinkSigma = (min: number, sigmaScale: number, sigma: number) => { return sigma/sigmaScale > min ? sigma/sigmaScale : min }
-const randNormVal = (min: number, max: number, mu: number, sigma: number) => { return Math.floor(clamph(max, randomNormal(mu, sigma)())) }
+const randNormVal = (min: number, max: number, mu: number, sigma: number) => { return Math.floor(clamp(min, max, clampr(min, max, randomNormal(mu, sigma)()))) }
 const randNormValh = (max: number, mu: number, sigma: number) => { return Math.floor(clamph(max, randomNormal(mu, sigma)())) }
 const randVal = (min: number, max: number) => { return Math.floor(Math.abs(Math.random() * (max - min) + min)) }
 const genKnobsRGB = () => {

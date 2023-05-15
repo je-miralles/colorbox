@@ -5,11 +5,13 @@ import Colorbox from './Colorbox';
 const useStyles = createStyles((theme) => ({
   wrapper: {
     position: 'relative',
-    paddingTop: rem(4),
-    paddingBottom: rem(4),
+    paddingTop: rem(1),
+    paddingBottom: rem(1),
   },
 
   title: {
+    paddingTop: rem(1),
+    paddingBottom: rem(1),
     textAlign: 'center',
     fontWeight: 800,
     fontSize: rem(32),

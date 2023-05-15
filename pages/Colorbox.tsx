@@ -289,7 +289,7 @@ export default function Colorbox({ numColors }: ColorboxProps) {
             },
           })}
         >
-          Randomize
+          randomize
         </Button>
       </Group>
       <Grid gutterXs="xs" m="0" columns={24} justify="center" align="stretch">

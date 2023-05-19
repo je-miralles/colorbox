@@ -228,7 +228,7 @@ export default function Colorbox({ numColors }: ColorboxProps) {
   const clickColors = useCallback((color: ColorcardData) => {
     const cardType = color.string.slice(0,3);
     const minSigma = 15;
-    const minSigmaH = 40;
+    const minSigmaH = 30;
     const minSigmaS = 45;
     const minSigmaL = 45;
     const sigmaScale = 2;

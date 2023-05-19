@@ -56,7 +56,7 @@ export default function Colorcard({ color, clickColors }: ColorcardProps) {
         className={classes.text}
         lineClamp={10}
         component="a"
-        href="#"
+        href="#!"
         onClick={handleClickColors}
         sx={{ color: `${color.code}` }}
       >

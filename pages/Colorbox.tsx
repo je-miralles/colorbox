@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import { rem, createStyles, Group, Container, Center, Grid, Text, Button } from '@mantine/core';
 import { useViewportSize } from '@mantine/hooks';
 import { rgb, hsl } from 'd3-color';
@@ -212,6 +213,7 @@ const useStyles = createStyles((theme) => ({
 let didInit = false;
 
 export default function Colorbox({ numColors }: ColorboxProps) {
+  const router = useRouter();
   const { classes } = useStyles();
   const { height, width } = useViewportSize();
   const [colors, setColors] = useState<ColorcardData[]>([]);
@@ -298,7 +300,7 @@ export default function Colorbox({ numColors }: ColorboxProps) {
             <Colorcard color={d} clickColors={clickColors}></Colorcard>
           </Grid.Col>))}
       </Grid>
-      {process.env.NODE_ENV == "development" && (
+      {router.query.showparams=="true" && (
         <Text className={classes.centertext} lh={rem(3)} weight={500} size="lg" mb="md">
           {knobsDisplay(colorKnobs, height, width)}
         </Text>

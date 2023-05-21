@@ -131,8 +131,8 @@ const genColors = (num: number, colorKnobs: colorGen, randFunc: (colorKnobs: col
 };
 const genColorKnobs = (cardType: string="random", s_rgRGB: randomRGBSigma=defaultKnobs.s_rgb, s_rgHSL: randomHSLSigma=defaultKnobs.s_hsl) => {
   const method = cardType == "random" ? ( Math.random() > 0.5 ? "hsl" : "rgb" ) : cardType;
-  const rgRGB = genKnobsRGB();
-  const rgHSL = genKnobsHSL();
+  const rgRGB = cardType == "random" ? genKnobsRGB() : defaultKnobs.rgb;
+  const rgHSL = cardType == "random" ? genKnobsHSL() : defaultKnobs.hsl;
   return({
     method: method,
     rgb: rgRGB,
@@ -160,20 +160,20 @@ const knobsDisplay = (colorKnobs: colorGen, height: number, width: number) => {
 const defaultKnobs = {
   method: "hsl",
   rgb: {
-    r_min: 74,
-    r_max: 149,
+    r_min: 0,
+    r_max: 255,
     g_min: 0,
-    g_max: 85,
-    b_min: 191,
-    b_max: 98,
+    g_max: 255,
+    b_min: 0,
+    b_max: 255,
   },
   hsl: {
     h_min: 0,
     h_max: 360,
-    s_min: 32,
-    s_max: 62,
-    l_min: 25,
-    l_max: 39,
+    s_min: 0,
+    s_max: 100,
+    l_min: 0,
+    l_max: 100,
   },
   s_rgb: {
     r_mu: 127,

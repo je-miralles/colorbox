@@ -686,6 +686,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/d3-random@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "@types/d3-random@npm:3.0.1"
+  checksum: 7ed9f83ee3c0b02510767bf15551984c229491d694c3c9a45a8eb80b27f7eb5f9096a48011c8cae6787b3e36321a6aaf2fe0efed8685a669481927a3d08e6b8a
+  languageName: node
+  linkType: hard
+
 "@types/json5@npm:^0.0.29":
   version: 0.0.29
   resolution: "@types/json5@npm:0.0.29"
@@ -1114,10 +1121,12 @@ __metadata:
     "@mantine/hooks": 6.0.0
     "@mantine/next": 6.0.0
     "@types/d3-color": ^3.1.0
+    "@types/d3-random": ^3.0.1
     "@types/node": 18.14.4
     "@types/react": 18.0.28
     "@types/react-dom": 18.0.11
     d3-color: ^3.1.0
+    d3-random: ^3.0.1
     eslint: 8.35.0
     eslint-config-next: 13.2.3
     next: 13.2.3
@@ -1199,6 +1208,13 @@ __metadata:
   version: 3.1.0
   resolution: "d3-color@npm:3.1.0"
   checksum: 4931fbfda5d7c4b5cfa283a13c91a954f86e3b69d75ce588d06cde6c3628cebfc3af2069ccf225e982e8987c612aa7948b3932163ce15eb3c11cd7c003f3ee3b
+  languageName: node
+  linkType: hard
+
+"d3-random@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "d3-random@npm:3.0.1"
+  checksum: a70ad8d1cabe399ebeb2e482703121ac8946a3b336830b518da6848b9fdd48a111990fc041dc716f16885a72176ffa2898f2a250ca3d363ecdba5ef92b18e131
   languageName: node
   linkType: hard
 

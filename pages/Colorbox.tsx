@@ -145,14 +145,14 @@ const knobsDisplay = (colorKnobs: colorGen, height: number, width: number) => {
   return colorKnobs.method == "hsl" ? (
     <>
       <p>h.min {colorKnobs.hsl.h_min} h.max {colorKnobs.hsl.h_max} s.min {colorKnobs.hsl.s_min} s.max {colorKnobs.hsl.s_max} l.min {colorKnobs.hsl.l_min} l.max {colorKnobs.hsl.l_max}</p>
-      <p>h.mu {colorKnobs.s_hsl.h_mu} h.sigma {colorKnobs.s_hsl.h_sigma} s.mu {colorKnobs.s_hsl.s_mu} s.sigma {colorKnobs.s_hsl.s_sigma} l.mu {colorKnobs.s_hsl.l_mu} l.sigma {colorKnobs.s_hsl.l_sigma}</p>
-      <p>viewport: {width}, {height} ({width/16}, {height/16})</p>
+      <p>h.mu {colorKnobs.s_hsl.h_mu.toFixed(2)} h.sigma {colorKnobs.s_hsl.h_sigma.toFixed(2)} s.mu {colorKnobs.s_hsl.s_mu.toFixed(2)} s.sigma {colorKnobs.s_hsl.s_sigma.toFixed(2)} l.mu {colorKnobs.s_hsl.l_mu.toFixed(2)} l.sigma {colorKnobs.s_hsl.l_sigma.toFixed(2)}</p>
+      <p>viewport: {width}, {height} ({(width/16).toFixed(2)}, {(height/16).toFixed(2)})</p>
     </>
   ) : (
     <>
       <p>r.min {colorKnobs.rgb.r_min} r.max {colorKnobs.rgb.r_max} g.min {colorKnobs.rgb.g_min} g.max {colorKnobs.rgb.g_max} b.min {colorKnobs.rgb.b_min} b.max {colorKnobs.rgb.b_max}</p>
-      <p>r.mu {colorKnobs.s_rgb.r_mu} r.sigma {colorKnobs.s_rgb.r_sigma} g.mu {colorKnobs.s_rgb.g_mu} g.sigma {colorKnobs.s_rgb.g_sigma} b.mu {colorKnobs.s_rgb.b_mu} b.sigma {colorKnobs.s_rgb.b_sigma}</p>
-      <p>viewport: {width}, {height} ({width/16}, {height/16})</p>
+      <p>r.mu {colorKnobs.s_rgb.r_mu.toFixed(2)} r.sigma {colorKnobs.s_rgb.r_sigma.toFixed(2)} g.mu {colorKnobs.s_rgb.g_mu.toFixed(2)} g.sigma {colorKnobs.s_rgb.g_sigma.toFixed(2)} b.mu {colorKnobs.s_rgb.b_mu.toFixed(2)} b.sigma {colorKnobs.s_rgb.b_sigma.toFixed(2)}</p>
+      <p>viewport: {width}, {height} ({(width/16).toFixed(2)}, {(height/16).toFixed(2)})</p>
     </>
   );
 };

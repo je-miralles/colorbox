@@ -162,9 +162,9 @@ const genKnobsHSL = () => {
 export function genColorKnobs(color: ColorcardData={string:"rnd", code:""}, colorKnobs: colorGen=defaultKnobs) {
   const cardType = color.string.slice(0,3);
   const minSigma = 15;
-  const minSigmaH = 30;
-  const minSigmaS = 45;
-  const minSigmaL = 45;
+  const minSigmaH = 15;
+  const minSigmaS = 5;
+  const minSigmaL = 5;
   const sigmaScale = 2;
   let color_rgb;
   let color_hsl;
@@ -190,7 +190,7 @@ export function genColorKnobs(color: ColorcardData={string:"rnd", code:""}, colo
     h_mu: color_hsl.h ? (color_hsl.h + colorKnobs.s_hsl.h_mu)/2 : colorKnobs.s_hsl.h_mu,
     s_mu: color_hsl.s ? (color_hsl.s + colorKnobs.s_hsl.s_mu)/2 : colorKnobs.s_hsl.s_mu,
     l_mu: color_hsl.l ? (color_hsl.l + colorKnobs.s_hsl.l_mu)/2 : colorKnobs.s_hsl.l_mu,
-    h_sigma: shrinkSigma(minSigmaH, sigmaScale, colorKnobs.s_hsl.h_sigma),
+    h_sigma: shrinkSigma(minSigmaH, sigmaScale*2, colorKnobs.s_hsl.h_sigma),
     s_sigma: shrinkSigma(minSigmaS, sigmaScale, colorKnobs.s_hsl.s_sigma),
     l_sigma: shrinkSigma(minSigmaL, sigmaScale, colorKnobs.s_hsl.l_sigma),
   };
